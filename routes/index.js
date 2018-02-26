@@ -8,8 +8,10 @@ app.use(bodyParser.json());
 
 const taunts = [
   "Don't make me run, I'm full of Chocolate!",
-  "I don't deserve this, I came here legally as an exchange student!",
-  "Oh guten tag. Would you like a bite of my Vengelerstrasse bar?",
+  "I don't deserve this!", 
+  "I came here legally as an exchange student!",
+  "Oh guten tag.",
+  "Would you like a bite of my Vengelerstrasse bar?",
   "I also have a bag of marzipan JoyJoys!",
   "Would you like another lick of my flavor wax?",
   "I begged you to look at mine first!"
