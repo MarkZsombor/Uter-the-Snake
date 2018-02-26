@@ -1,5 +1,9 @@
 var express = require('express')
 var router  = express.Router()
+var bodyParser = require('body-parser')
+var app = express();
+
+app.use(bodyParser.json());
 
 var taunts = [
   "Don't make me run, I'm full of Chocolate!",
@@ -15,25 +19,25 @@ function getTaunt() {
   return taunts[tauntIndex];
 }
 
+var snakeInfo = {
+  color: '#FFD90F',
+  name: 'Uter',
+  head_url: 'http://www.simpsonspark.com/images/persos/contributions/uter-22544.jpg',
+  head_type: 'safe',
+  tail_type: 'round-bum',
+  taunt: taunts[0],
+}
 
 // Handle POST request to '/start'
 router.post('/start', function (req, res) {
   // NOTE: Do something here to start the game
 
-  // Response data
-  var data = {
-    color: '#FFD90F',
-    name: 'Uter',
-    head_type: 'safe',
-    tail_type: 'round-bum',
-    taunt: taunts[0],
-  }
-
-  return res.json(data)
+  return res.json(snakeInfo);
 })
 
 // Need:
 // Limit move choices to non-death choices
+//  -Fill board with danger spots, including could be occupied areas
 // Find closest food
 // Move to food
 // When close circle food if health is high
@@ -42,7 +46,7 @@ router.post('/start', function (req, res) {
 // Handle POST request to '/move'
 router.post('/move', function (req, res) {
   // NOTE: Do something here to generate your move
-
+  var gameState = req.body;
 
   // Response data
   var data = {
