@@ -87,10 +87,24 @@ router.post('/move', function (req, res) {
   }
 
   setGrid();
-  const closestFood = {
-    x: 0,
-    y: 9
-  };
+  function findClosetFood() {
+    console.log(gameState.food.data);
+    let allFood = [];
+    for (let i in gameState.food.data) {
+      let distance = Math.abs(gameState.food.data[i].x - myHead.x) + Math.abs(gameState.food.data[i].y - myHead.y);
+      // console.log('distance', distance);
+      allFood.push({
+        x: gameState.food.data[i].x,
+        y: gameState.food.data[i].y,
+        distance: distance
+      })
+    }
+    allFood.sort(function (a, b) {
+      return a.distance - b.distance;
+    });
+    return allFood[0];
+  }
+  const closestFood = findClosetFood();
   const finder = new PF.AStarFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestFood.x, closestFood.y, grid);
   

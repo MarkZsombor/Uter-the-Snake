@@ -7,7 +7,12 @@ var gameState = {
                 "object": "point",
                 "x": 0,
                 "y": 9
-            }
+						},
+						{
+							"object": "point",
+							"x": 5,
+							"y": 1
+						}
         ],
         "object": "list"
     },
@@ -87,13 +92,13 @@ var gameState = {
                 },
                 {
                     "object": "point",
-                    "x": 8,
-                    "y": 16
+                    "x": 9,
+                    "y": 15
                 },
                 {
                     "object": "point",
-                    "x": 8,
-                    "y": 17
+                    "x": 10,
+                    "y": 15
                 }
             ],
             "object": "list"
@@ -116,7 +121,7 @@ var grid = new PF.Grid(gameState.width, gameState.height);
 
 function setGrid() {
 	//Mark my snake in grid
-	for (let i = 0; i < gameState.you.body.data.length; i++) {
+	for (let i = 1; i < gameState.you.body.data.length; i++) {
 		grid.setWalkableAt(gameState.you.body.data[i].x, gameState.you.body.data[i].y, false);
 	}
 	//Mark other snake heads
@@ -148,8 +153,44 @@ function setGrid() {
 }
 
 setGrid();
-console.log(grid.nodes[19]);
 
+function findClosetFood() {
+	console.log(gameState.food.data);
+	let allFood = [];
+	for (let i in gameState.food.data) {
+		let distance = Math.abs(gameState.food.data[i].x - myHead.x) + Math.abs(gameState.food.data[i].y - myHead.y);
+		// console.log('distance', distance);
+		allFood.push({
+			x: gameState.food.data[i].x,
+			y: gameState.food.data[i].y,
+			distance: distance
+		})
+	}
+	allFood.sort(function(a,b) {
+		return a.distance - b.distance;
+	});
+	return allFood[0];
+}
+const closestFood = findClosetFood();
+const finder = new PF.AStarFinder;
+const path = finder.findPath(myHead.x, myHead.y, closestFood.x, closestFood.y, grid);
+console.log(myHead, path);
+
+function setMove() {
+	if (path[1][0] === myHead.x && path[1][1] === myHead.y + 1) {
+		return 'up';
+	} else if (path[1][0] === myHead.x && path[1][1] === myHead.y - 1) {
+		return 'down';
+	} else if (path[1][0] === myHead.x + 1 && path[1][1] === myHead.y) {
+		return 'right';
+	} else if (path[1][0] === myHead.x -1 && path[1][1] === myHead.y) {
+		return 'left';
+	} else {
+		return 'up';
+	}
+}
+
+console.log(setMove());
 
 
 
