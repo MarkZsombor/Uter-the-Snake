@@ -82,9 +82,9 @@ router.post('/move', function (req, res) {
 
   // Stop the snake from running into itself
   function checkSelf() {
-    for (var i = 0; i < mySnekBody.length; i++) {
+    for (var i = 0; i < gameState.you.body.data.length; i++) {
       for (var move in possibleMoves) {
-        if (possibleMoves[move].x === mySnekBody[i].x && possibleMoves[move].y === mySnekBody[i].y) {
+        if (possibleMoves[move].x === gameState.you.body.data[i].x && possibleMoves[move].y === gameState.you.body.data[i].y) {
           possibleMoves[move].valid = false;
         }
       }
