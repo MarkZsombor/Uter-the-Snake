@@ -86,12 +86,12 @@ var reqObj = {
                 {
                     "object": "point",
                     "x": 8,
-                    "y": 15
+                    "y": 16
                 },
                 {
                     "object": "point",
                     "x": 8,
-                    "y": 15
+                    "y": 17
                 }
             ],
             "object": "list"
@@ -105,9 +105,48 @@ var reqObj = {
     }
 };
 
-var head = { 
+var myHead = { 
     x: reqObj.you.body.data[0].x,
     y: reqObj.you.body.data[0].y
 }
-console.log("my snake head? \n", head);
-console.log('snek', reqObj.you);
+// console.log("my snak head? \n", myHead);
+// console.log('snek', reqObj.you);
+var mySnekBody = reqObj.you.body.data;
+
+// console.log(mySnekBody);
+
+var possibleMoves = [
+  {
+    direction: "up",
+    x: myHead.x,
+    y: myHead.y - 1,
+    valid: true
+  },
+  {
+    direction: "down",
+    x: myHead.x,
+    y: myHead.y + 1,
+    valid: true
+  },
+  {
+    direction: "left",
+    x: myHead.x - 1,
+    y: myHead.y,
+    valid: true
+  },
+  {
+    direction: "right",
+    x: myHead.x + 1,
+    y: myHead.y,
+    valid: true
+  }
+]
+// Stop the snake from turning back into itself
+for (var i = 0; i < mySnekBody.length; i++) {
+    for (var move in possibleMoves) {
+        if (possibleMoves[move].x === mySnekBody[i].x && possibleMoves[move].y === mySnekBody[i].y) {
+            possibleMoves[move].valid = false;
+        }
+    }
+}
+console.log(possibleMoves)
