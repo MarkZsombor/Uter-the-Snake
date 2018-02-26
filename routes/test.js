@@ -149,4 +149,23 @@ for (var i = 0; i < mySnekBody.length; i++) {
         }
     }
 }
+
+console.log(reqObj.width)
+
+function checkEdges() {
+	for (var move in possibleMoves) {
+		console.log('yup')
+		if (possibleMoves[move].x < 0 || possibleMoves[move].x > reqObj.width) {
+			possibleMoves[move].valid = false;
+		}
+		if (possibleMoves[move].y < 0 || possibleMoves[move].y > reqObj.height) {
+			possibleMoves[move].valid = false;
+		}
+	}
+} 
+
+checkEdges();
+
+
+
 console.log(possibleMoves)
