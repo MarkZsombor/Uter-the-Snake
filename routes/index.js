@@ -37,8 +37,6 @@ router.post('/start', function (req, res) {
 })
 
 // Need:
-// Limit move choices to non-death choices
-//  -Prioretize potential killing head on collisions?
 // Find closest food
 // Move to food
 // When close circle food if health is high
@@ -57,7 +55,7 @@ router.post('/move', function (req, res) {
 
   function setGrid() {
     //Mark my snake in grid
-    for (let i = 0; i < gameState.you.body.data.length; i++) {
+    for (let i = 1; i < gameState.you.body.data.length; i++) {
       grid.setWalkableAt(gameState.you.body.data[i].x, gameState.you.body.data[i].y, false);
     }
     //Mark other snake heads
@@ -70,7 +68,7 @@ router.post('/move', function (req, res) {
         }
         //Decide on head collision depending on size
         if (gameState.you.length <= allSnakes[snake].length) {
-          console.log('he can beat us');
+          //Pathfinding will throw an error if we try to set a space outside the board
           if (allSnakes[snake].body.data[0].x + 1 < gameState.width) {
             grid.setWalkableAt((allSnakes[snake].body.data[0].x + 1), allSnakes[snake].body.data[0].y, false);
           }
@@ -89,12 +87,29 @@ router.post('/move', function (req, res) {
   }
 
   setGrid();
-  //Stop from running into other snakes
-  //Allow for charging smaller snakes
-
+  const closestFood = {
+    x: 0,
+    y: 9
+  };
+  const finder = new PF.AStarFinder;
+  const path = finder.findPath(myHead.x, myHead.y, closestFood.x, closestFood.y, grid);
+  
+  function setMove() {
+    if (path[1][0] === myHead.x && path[1][1] === myHead.y + 1) {
+      return 'up';
+    } else if (path[1][0] === myHead.x && path[1][1] === myHead.y - 1) {
+      return 'down';
+    } else if (path[1][0] === myHead.x + 1 && path[1][1] === myHead.y) {
+      return 'right';
+    } else if (path[1][0] === myHead.x - 1 && path[1][1] === myHead.y) {
+      return 'left';
+    } else {
+      return 'up';
+    }
+  }
   // Response data
   const data = {
-    move: 'up', // one of: ['up','down','left','right']
+    move: setMove(),
     taunt: getTaunt()
   }
 
