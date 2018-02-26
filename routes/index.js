@@ -110,9 +110,9 @@ router.post('/move', function (req, res) {
   
   function setMove() {
     if (path[1][0] === myHead.x && path[1][1] === myHead.y + 1) {
-      return 'up';
+      return 'down'; //potential y-axis inversion
     } else if (path[1][0] === myHead.x && path[1][1] === myHead.y - 1) {
-      return 'down';
+      return 'up'; //potential y-axis inversion
     } else if (path[1][0] === myHead.x + 1 && path[1][1] === myHead.y) {
       return 'right';
     } else if (path[1][0] === myHead.x - 1 && path[1][1] === myHead.y) {
