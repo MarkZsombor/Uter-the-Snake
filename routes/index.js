@@ -20,19 +20,19 @@ function getTaunt() {
   return taunts[tauntIndex];
 }
 
-const snakeInfo = {
-  color: '#FFD90F',
-  name: 'Uter',
-  head_url: 'http://www.simpsonspark.com/images/persos/contributions/uter-22544.jpg',
-  head_type: 'safe',
-  tail_type: 'round-bum',
-  taunt: taunts[0],
-}
+
 
 // Handle POST request to '/start'
 router.post('/start', function (req, res) {
   // NOTE: Do something here to start the game
-
+  const snakeInfo = {
+    color: '#FFD90F',
+    name: 'Uter',
+    head_url: 'http://www.simpsonspark.com/images/persos/contributions/uter-22544.jpg',
+    head_type: 'safe',
+    tail_type: 'round-bum',
+    taunt: taunts[0],
+  }
   return res.json(snakeInfo);
 })
 
