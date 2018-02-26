@@ -1,4 +1,4 @@
-var reqObj = {
+var gameState = {
     "food": {
         "data": [
             {
@@ -106,12 +106,12 @@ var reqObj = {
 };
 
 var myHead = { 
-    x: reqObj.you.body.data[0].x,
-    y: reqObj.you.body.data[0].y
+    x: gameState.you.body.data[0].x,
+    y: gameState.you.body.data[0].y
 }
 // console.log("my snak head? \n", myHead);
-// console.log('snek', reqObj.you);
-var mySnekBody = reqObj.you.body.data;
+// console.log('snek', gameState.you);
+var mySnekBody = gameState.you.body.data;
 
 // console.log(mySnekBody);
 
@@ -150,22 +150,33 @@ for (var i = 0; i < mySnekBody.length; i++) {
     }
 }
 
-console.log(reqObj.width)
-
-function checkEdges() {
-	for (var move in possibleMoves) {
-		console.log('yup')
-		if (possibleMoves[move].x < 0 || possibleMoves[move].x > reqObj.width) {
+//check edges
+for (var move in possibleMoves) {
+		if (possibleMoves[move].x < 0 || possibleMoves[move].x > gameState.width) {
 			possibleMoves[move].valid = false;
 		}
-		if (possibleMoves[move].y < 0 || possibleMoves[move].y > reqObj.height) {
+		if (possibleMoves[move].y < 0 || possibleMoves[move].y > gameState.height) {
 			possibleMoves[move].valid = false;
 		}
 	}
-} 
 
-checkEdges();
+	//check for other snakes
+var allSnakes = gameState.snakes.data
+for (var snake in allSnakes) {
+	if (allSnakes[snake].id !== gameState.you.id) {
+		console.log('Found enemy')
+		console.log(allSnakes[snake]);
+		//Don't run into body
+		for (var i = 0; i < allSnakes[snake].body.data.length; i++) {
+			for (var move in possibleMoves) {
+				console.log(possibleMoves[move].x, allSnakes[snake].body.data[i].x);
+				if (possibleMoves[move].x === allSnakes[snake].body.data[i].x && possibleMoves[move].y === allSnakes[snake].body.data[i].y) {
+					possibleMoves[move].valid = false;
+				}
+			}
+		}
+		//Decide on head collision depending on size
+	}
+}
 
-
-
-console.log(possibleMoves)
+// console.log(possibleMoves)

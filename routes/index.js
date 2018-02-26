@@ -37,7 +37,6 @@ router.post('/start', function (req, res) {
 
 // Need:
 // Limit move choices to non-death choices
-//  -Fill board with danger spots, including could be occupied areas
 //  -Prioretize potential killing head on collisions?
 // Find closest food
 // Move to food
