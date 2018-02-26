@@ -55,15 +55,15 @@ router.post('/move', function (req, res) {
 
   function setGrid() {
     //Mark my snake in grid
-    for (let i = 1; i < gameState.you.body.data.length; i++) {
+    for (var i = 1; i < gameState.you.body.data.length; i++) {
       grid.setWalkableAt(gameState.you.body.data[i].x, gameState.you.body.data[i].y, false);
     }
     //Mark other snake heads
     const allSnakes = gameState.snakes.data
-    for (let snake in allSnakes) {
+    for (var snake in allSnakes) {
       if (allSnakes[snake].id !== gameState.you.id) {
         //Don't run into body
-        for (let j = 0; j < allSnakes[snake].body.data.length; j++) {
+        for (var j = 0; j < allSnakes[snake].body.data.length; j++) {
           grid.setWalkableAt(allSnakes[snake].body.data[j].x, allSnakes[snake].body.data[j].y, false);
         }
         //Decide on head collision depending on size
@@ -88,10 +88,10 @@ router.post('/move', function (req, res) {
 
   setGrid();
   function findClosetFood() {
-    console.log(gameState.food.data);
-    let allFood = [];
-    for (let i in gameState.food.data) {
-      let distance = Math.abs(gameState.food.data[i].x - myHead.x) + Math.abs(gameState.food.data[i].y - myHead.y);
+    // console.log(gameState.food.data);
+    var allFood = [];
+    for (var i in gameState.food.data) {
+      var distance = Math.abs(gameState.food.data[i].x - myHead.x) + Math.abs(gameState.food.data[i].y - myHead.y);
       // console.log('distance', distance);
       allFood.push({
         x: gameState.food.data[i].x,

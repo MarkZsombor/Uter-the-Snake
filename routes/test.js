@@ -155,7 +155,7 @@ function setGrid() {
 setGrid();
 
 function findClosetFood() {
-	console.log(gameState.food.data);
+	// console.log(gameState.food.data);
 	let allFood = [];
 	for (let i in gameState.food.data) {
 		let distance = Math.abs(gameState.food.data[i].x - myHead.x) + Math.abs(gameState.food.data[i].y - myHead.y);
@@ -174,7 +174,7 @@ function findClosetFood() {
 const closestFood = findClosetFood();
 const finder = new PF.AStarFinder;
 const path = finder.findPath(myHead.x, myHead.y, closestFood.x, closestFood.y, grid);
-console.log(myHead, path);
+// console.log(myHead, path);
 
 function setMove() {
 	if (path[1][0] === myHead.x && path[1][1] === myHead.y + 1) {
@@ -190,7 +190,7 @@ function setMove() {
 	}
 }
 
-console.log(setMove());
+// console.log(setMove());
 
 
 
