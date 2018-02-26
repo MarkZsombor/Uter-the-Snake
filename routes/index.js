@@ -7,10 +7,11 @@ router.post('/start', function (req, res) {
 
   // Response data
   var data = {
-    color: '#DFFF00',
-    name: 'Node Snake',
-    head_url: 'http://www.placecage.com/c/200/200', // optional, but encouraged!
-    taunt: "Let's do thisss thang!", // optional, but encouraged!
+    color: '#FFD90F',
+    name: 'Uter',
+    head_type: 'safe',
+    tail_type: 'round-bum',
+    taunt: "Don't make me run, I'm full of Chocolate!",
   }
 
   return res.json(data)
@@ -23,8 +24,17 @@ router.post('/move', function (req, res) {
   // Response data
   var data = {
     move: 'up', // one of: ['up','down','left','right']
-    taunt: 'Outta my way, snake!', // optional, but encouraged!
+    taunt: "I don't deserve this, I came here legally as an exchange student!", // optional, but encouraged!
   }
+
+  var taunts = [
+    "Don't make me run, I'm full of Chocolate!",
+    "I don't deserve this, I came here legally as an exchange student!",
+    "Oh guten tag. Would you like a bite of my Vengelerstrasse bar?",
+    "I also have a bag of marzipan JoyJoys!",
+    "Would you like another lick of my flavor wax?",
+    "I begged you to look at mine first!"
+  ];
 
   return res.json(data)
 })
