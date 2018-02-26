@@ -1,11 +1,12 @@
-var express = require('express')
-var router  = express.Router()
-var bodyParser = require('body-parser')
-var app = express();
+const express = require('express')
+const router  = express.Router()
+const bodyParser = require('body-parser')
+const app = express();
+const PF = require('pathfinding');
 
 app.use(bodyParser.json());
 
-var taunts = [
+const taunts = [
   "Don't make me run, I'm full of Chocolate!",
   "I don't deserve this, I came here legally as an exchange student!",
   "Oh guten tag. Would you like a bite of my Vengelerstrasse bar?",
@@ -15,11 +16,11 @@ var taunts = [
 ];
 
 function getTaunt() {
-  var tauntIndex = Math.floor(Math.random() * (taunts.length));
+  const tauntIndex = Math.floor(Math.random() * (taunts.length));
   return taunts[tauntIndex];
 }
 
-var snakeInfo = {
+const snakeInfo = {
   color: '#FFD90F',
   name: 'Uter',
   head_url: 'http://www.simpsonspark.com/images/persos/contributions/uter-22544.jpg',
@@ -46,67 +47,53 @@ router.post('/start', function (req, res) {
 // Handle POST request to '/move'
 router.post('/move', function (req, res) {
   // NOTE: Do something here to generate your move
-  var gameState = req.body;
-  var myHead = {
+  const gameState = req.body;
+  const myHead = {
     x: gameState.you.body.data[0].x,
     y: gameState.you.body.data[0].y
   }
 
-  var possibleMoves = [
-    {
-      direction: "up",
-      x: myHead.x,
-      y: myHead.y - 1,
-      valid: true
-    },
-    {
-      direction: "down",
-      x: myHead.x,
-      y: myHead.y + 1,
-      valid: true
-    },
-    {
-      direction: "left",
-      x: myHead.x - 1,
-      y: myHead.y,
-      valid: true
-    },
-    {
-      direction: "right",
-      x: myHead.x + 1,
-      y: myHead.y,
-      valid: true
-    },
-  ]
+  const grid = new PF.Grid(gameState.width, gameState.height);
 
-  // Stop the snake from running into itself
-  function checkSelf() {
-    for (var i = 0; i < gameState.you.body.data.length; i++) {
-      for (var move in possibleMoves) {
-        if (possibleMoves[move].x === gameState.you.body.data[i].x && possibleMoves[move].y === gameState.you.body.data[i].y) {
-          possibleMoves[move].valid = false;
+  function setGrid() {
+    //Mark my snake in grid
+    for (let i = 0; i < gameState.you.body.data.length; i++) {
+      grid.setWalkableAt(gameState.you.body.data[i].x, gameState.you.body.data[i].y, false);
+    }
+    //Mark other snake heads
+    const allSnakes = gameState.snakes.data
+    for (let snake in allSnakes) {
+      if (allSnakes[snake].id !== gameState.you.id) {
+        //Don't run into body
+        for (let j = 0; j < allSnakes[snake].body.data.length; j++) {
+          grid.setWalkableAt(allSnakes[snake].body.data[j].x, allSnakes[snake].body.data[j].y, false);
+        }
+        //Decide on head collision depending on size
+        if (gameState.you.length <= allSnakes[snake].length) {
+          console.log('he can beat us');
+          if (allSnakes[snake].body.data[0].x + 1 < gameState.width) {
+            grid.setWalkableAt((allSnakes[snake].body.data[0].x + 1), allSnakes[snake].body.data[0].y, false);
+          }
+          if (allSnakes[snake].body.data[0].x - 1 >= 0) {
+            grid.setWalkableAt((allSnakes[snake].body.data[0].x - 1), allSnakes[snake].body.data[0].y, false);
+          }
+          if (allSnakes[snake].body.data[0].y + 1 < gameState.height) {
+            grid.setWalkableAt(allSnakes[snake].body.data[0].x, (allSnakes[snake].body.data[0].y + 1), false);
+          }
+          if (allSnakes[snake].body.data[0].y - 1 >= 0) {
+            grid.setWalkableAt(allSnakes[snake].body.data[0].x, (allSnakes[snake].body.data[0].y - 1), false);
+          }
         }
       }
     }
   }
 
-  //Stop from running into wall
-  function checkEdges() {
-    for (var move in possibleMoves) {
-      console.log('yup')
-      if (possibleMoves[move].x < 0 || possibleMoves[move].x > gameState.width) {
-        possibleMoves[move].valid = false;
-      }
-      if (possibleMoves[move].y < 0 || possibleMoves[move].y > gameState.height) {
-        possibleMoves[move].valid = false;
-      }
-    }
-  } 
+  setGrid();
   //Stop from running into other snakes
   //Allow for charging smaller snakes
 
   // Response data
-  var data = {
+  const data = {
     move: 'up', // one of: ['up','down','left','right']
     taunt: getTaunt()
   }
