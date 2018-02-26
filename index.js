@@ -45,7 +45,7 @@ app.use(function (err, req, res, next) {
   res.status(404)
   res.send({
     status: 404,
-    error: err.message || "These are not the snakes you're looking for"
+    error: err.message || "These are not the snakes you're looking for, you must find Uter!"
   })
 
   return
