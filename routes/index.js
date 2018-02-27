@@ -107,7 +107,7 @@ router.post('/move', function (req, res) {
     return allFood[0];
   }
   const closestFood = findClosetFood();
-  const finder = new PF.BestFirstFinder;
+  const finder = new PF.AStarFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestFood.x, closestFood.y, grid);
   
   function setMove() {
