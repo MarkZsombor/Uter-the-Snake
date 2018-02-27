@@ -96,6 +96,51 @@ router.post('/move', function (req, res) {
   const finder = new PF.AStarFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
   
+  if (!path.length) {
+    var possibleMoves = [
+      {
+        direction: "up",
+        x: myHead.x,
+        y: myHead.y - 1,
+        valid: true
+      },
+      {
+        direction: "down",
+        x: myHead.x,
+        y: myHead.y + 1,
+        valid: true
+      },
+      {
+        direction: "left",
+        x: myHead.x - 1,
+        y: myHead.y,
+        valid: true
+      },
+      {
+        direction: "right",
+        x: myHead.x + 1,
+        y: myHead.y,
+        valid: true
+      },
+    ]
+    var validMoves = [];
+    for (var i in possibleMoves) {
+      possibleMoves[i].valid = grid.nodes[possibleMoves[i].y][possibleMoves[i].x].walkable;
+      if (possibleMoves[i].valid) {
+        validMoves.push(possibleMoves[i]);
+      }
+    }
+    function getPlanB() {
+      const moveIndex = Math.floor(Math.random() * (validMoves.length));
+      return validMoves[moveIndex].direction;
+    }
+
+    const snakeResponse = {
+      move: getPlanB(),
+      taunt: taunts[5]
+    }
+    return res.json(snakeResponse)
+  }
   function setMove() {
     if (path[1][0] === myHead.x && path[1][1] === myHead.y + 1) {
       return 'down'; 
