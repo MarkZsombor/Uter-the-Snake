@@ -1,181 +1,300 @@
 var PF = require('pathfinding');
 
 var gameState = {
-    "food": {
-        "data": [
-            {
-                "object": "point",
-                "x": 0,
-                "y": 9
-						},
+	"width": 21,
+	"height": 23,
+	"id": 289,
+	"turn": 10,
+	"snakes": {
+		"data": [
 			{
-				"object": "point",
-				"x": 5,
-				"y": 1
-			}
-        ],
-        "object": "list"
-    },
-    "height": 20,
-    "id": 1,
-    "object": "world",
-    "snakes": {
-        "data": [
-            {
-              "body": {
-                "data": [
-                  {
-                    "object": "point",
-                    "x": 8,
-                    "y": 8
-                  },
-                  {
-                    "object": "point",
-                    "x": 8,
-                    "y": 9
-                  },
-                  {
-                    "object": "point",
-                    "x": 8,
-                    "y": 10
-                  },
-                  {
-                    "object": "point",
-                    "x": 8,
-                    "y": 11
-                  },
-                  {
-                    "object": "point",
-                    "x": 8,
-                    "y": 12
-                  },
-                  {
-                    "object": "point",
-                    "x": 9,
-                    "y": 12
-                  },
-                  {
-                    "object": "point",
-                    "x": 10,
-                    "y": 12
-                  },
-                  {
-                    "object": "point",
-                    "x": 11,
-                    "y": 12
-                  },
-                  {
-                    "object": "point",
-                    "x": 12,
-                    "y": 12
-                  },
-                  {
-                    "object": "point",
-                    "x": 12,
-                    "y": 11
-                  },
-                  {
-                    "object": "point",
-                    "x": 12,
-                    "y": 10
-                  },
-                  {
-                    "object": "point",
-                    "x": 12,
-                    "y": 9
-                  },
-                  {
-                    "object": "point",
-                    "x": 12,
-                    "y": 8
-                  },
-                  {
-                    "object": "point",
-                    "x": 11,
-                    "y": 8
-                  },
-                  {
-                    "object": "point",
-                    "x": 10,
-                    "y": 8
-                  },
-                  {
-                    "object": "point",
-                    "x": 9,
-                    "y": 8
-                  },
-                    ],
-                    "object": "list"
-                },
-                "health": 100,
-                "id": "58a0142f-4cd7-4d35-9b17-815ec8ff8e70",
-                "length": 3,
-                "name": "Sonic Snake",
-                "object": "snake",
-                "taunt": "Gotta go fast"
-            },
-            {
-                "body": {
-                    "data": [
+				"id": "64f03f9f-c332-4330-8a1e-8342c8d887c7",
+				"health": 91,
+				"length": 4,
+				"taunt": "\"Boop the snoot!\"",
+				"name": "LUL",
+				"object": "snake",
+				"body": {
+					"data": [
 						{
 							"object": "point",
-							"x": 10,
+							"x": 18,
+							"y": 5
+						},
+						{
+							"object": "point",
+							"x": 17,
+							"y": 5
+						},
+						{
+							"object": "point",
+							"x": 17,
+							"y": 4
+						},
+						{
+							"object": "point",
+							"x": 18,
+							"y": 4
+						}
+					],
+					"object": "list"
+				}
+			},
+			{
+				"id": "1ee1141d-7194-44a0-b6dd-0f351894bc4e",
+				"health": 90,
+				"length": 3,
+				"taunt": "\"Bears, Beets, Battlestar Galactica\"",
+				"name": "Dwight",
+				"object": "snake",
+				"body": {
+					"data": [
+						{
+							"object": "point",
+							"x": 6,
+							"y": 7
+						},
+						{
+							"object": "point",
+							"x": 6,
+							"y": 6
+						},
+						{
+							"object": "point",
+							"x": 5,
+							"y": 6
+						}
+					],
+					"object": "list"
+				}
+			},
+			{
+				"id": "e0323921-3386-4883-b531-e8ad277b370e",
+				"health": 97,
+				"length": 4,
+				"taunt": "\"python!\"",
+				"name": "ds",
+				"object": "snake",
+				"body": {
+					"data": [
+						{
+							"object": "point",
+							"x": 16,
+							"y": 17
+						},
+						{
+							"object": "point",
+							"x": 16,
+							"y": 16
+						},
+						{
+							"object": "point",
+							"x": 16,
+							"y": 15
+						},
+						{
+							"object": "point",
+							"x": 16,
+							"y": 14
+						}
+					],
+					"object": "list"
+				}
+			},
+			{
+				"id": "e3e768eb-9f1e-485e-b406-a325e3e162d7",
+				"health": 90,
+				"length": 3,
+				"taunt": "\"battlesnake-go!\"",
+				"name": "Snake Charmer",
+				"object": "snake",
+				"body": {
+					"data": [
+						{
+							"object": "point",
+							"x": 0,
+							"y": 3
+						},
+						{
+							"object": "point",
+							"x": 0,
+							"y": 4
+						},
+						{
+							"object": "point",
+							"x": 1,
+							"y": 4
+						}
+					],
+					"object": "list"
+				}
+			},
+			{
+				"id": "1d442390-4195-4f47-93ce-21a56b250f4b",
+				"health": 98,
+				"length": 4,
+				"taunt": "\"Don't make me run, I'm full of Chocolate!\"",
+				"name": "Uter",
+				"object": "snake",
+				"body": {
+					"data": [
+						{
+							"object": "point",
+							"x": 20,
+							"y": 1
+						},
+						{
+							"object": "point",
+							"x": 19,
+							"y": 1
+						},
+						{
+							"object": "point",
+							"x": 18,
+							"y": 1
+						},
+						{
+							"object": "point",
+							"x": 17,
+							"y": 1
+						}
+					],
+					"object": "list"
+				}
+			},
+			{
+				"id": "c3e89743-fbdd-465b-8208-45ea0919b05a",
+				"health": 90,
+				"length": 3,
+				"taunt": "\"<(O.o)>\"",
+				"name": "test",
+				"object": "snake",
+				"body": {
+					"data": [
+						{
+							"object": "point",
+							"x": 15,
+							"y": 22
+						},
+						{
+							"object": "point",
+							"x": 16,
+							"y": 22
+						},
+						{
+							"object": "point",
+							"x": 17,
+							"y": 22
+						}
+					],
+					"object": "list"
+				}
+			},
+			{
+				"id": "69c37835-e672-4b8a-9327-47cd204e8411",
+				"health": 90,
+				"length": 3,
+				"taunt": "\"eskettit!\"",
+				"name": "UVSD Snake Rev 6",
+				"object": "snake",
+				"body": {
+					"data": [
+						{
+							"object": "point",
+							"x": 16,
+							"y": 9
+						},
+						{
+							"object": "point",
+							"x": 16,
 							"y": 10
 						},
 						{
 							"object": "point",
-							"x": 10,
-							"y": 11
-						},
-						{
-							"object": "point",
-							"x": 11,
-							"y": 11
+							"x": 17,
+							"y": 10
 						}
-                    ],
-                    "object": "list"
-                },
-                "health": 100,
-                "id": "48ca23a2-dde8-4d0f-b03a-61cc9780427e",
-                "length": 3,
-                "name": "Typescript Snake",
-                "object": "snake",
-                "taunt": ""
-            }
-        ],
-        "object": "list"
-    },
-    "turn": 0,
-    "width": 20,
-    "you": {
-        "body": {
-            "data": [
-				{
-					"object": "point",
-					"x": 10,
-					"y": 10
-				},
-				{
-					"object": "point",
-					"x": 10,
-					"y": 11
-				},
-				{
-					"object": "point",
-					"x": 11,
-					"y": 11
+					],
+					"object": "list"
 				}
-            ],
-            "object": "list"
-        },
-        "health": 100,
-        "id": "48ca23a2-dde8-4d0f-b03a-61cc9780427e",
-        "length": 3,
-        "name": "Typescript Snake",
-        "object": "snake",
-        "taunt": ""
-    }
-};
+			}
+		],
+		"object": "list"
+	},
+	"food": {
+		"data": [
+			{
+				"object": "point",
+				"x": 18,
+				"y": 17
+			},
+			{
+				"object": "point",
+				"x": 10,
+				"y": 21
+			},
+			{
+				"object": "point",
+				"x": 5,
+				"y": 11
+			},
+			{
+				"object": "point",
+				"x": 20,
+				"y": 20
+			},
+			{
+				"object": "point",
+				"x": 20,
+				"y": 18
+			},
+			{
+				"object": "point",
+				"x": 0,
+				"y": 1
+			}
+		],
+		"object": "list"
+	},
+	"object": "world",
+	"dead_snakes": {
+		"data": [],
+		"object": "list"
+	},
+	"you": {
+		"id": "1d442390-4195-4f47-93ce-21a56b250f4b",
+		"health": 98,
+		"length": 4,
+		"taunt": "\"Don't make me run, I'm full of Chocolate!\"",
+		"name": "Uter",
+		"object": "snake",
+		"body": {
+			"data": [
+				{
+					"object": "point",
+					"x": 20,
+					"y": 1
+				},
+				{
+					"object": "point",
+					"x": 19,
+					"y": 1
+				},
+				{
+					"object": "point",
+					"x": 18,
+					"y": 1
+				},
+				{
+					"object": "point",
+					"x": 17,
+					"y": 1
+				}
+			],
+			"object": "list"
+		}
+	}
+}
 
 const taunts = [
 	"Don't make me run, I'm full of Chocolate!",
@@ -293,7 +412,7 @@ if(!path.length) {
 
 	snakeResponse.move = getPlanB();
 	snakeResponse.taunt= taunts[5];
-  console.log('plan b\n', snakeResponse)
+  console.log('plan b\n')
 
 } else {
 function setMove() {
@@ -312,9 +431,10 @@ function setMove() {
 
 snakeResponse.move = setMove();
 snakeResponse.taunt = taunts[3];
-console.log('plan a\n', snakeResponse)
+console.log('plan a\n')
 }
 
+console.log(snakeResponse)
 
 // console.log("my snak head? \n", myHead);
 // console.log('snek', gameState.you);

@@ -138,7 +138,7 @@ router.post('/move', function (req, res) {
 
     snakeResponse.move = getPlanB();
     snakeResponse.taunt = taunts[5];
-    return res.json(snakeResponse)
+    // return res.json(snakeResponse)
 
   } else {
     function setMove() {
@@ -154,12 +154,12 @@ router.post('/move', function (req, res) {
         return 'up';
       }
     }
-    
+
     snakeResponse.move = setMove();
     snakeResponse.taunt = taunts[3];
 
-    return res.json(snakeResponse)
   }
+  return res.json(snakeResponse)
 })
 
 module.exports = router
