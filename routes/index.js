@@ -9,11 +9,9 @@ app.use(bodyParser.json());
 const taunts = [
   "Don't make me run, I'm full of Chocolate!",
   "I don't deserve this!", 
-  "I came here legally as an exchange student!",
   "Oh guten tag.",
-  "Would you like a bite of my Vengelerstrasse bar?",
   "I also have a bag of marzipan JoyJoys!",
-  "Would you like another lick of my flavor wax?",
+  "Would you like a lick of my flavor wax?",
   "I begged you to look at mine first!"
 ];
 
@@ -22,14 +20,9 @@ function getTaunt() {
   return taunts[tauntIndex];
 }
 
-
-
-// Handle POST request to '/start'
 router.post('/start', function (req, res) {
-  // NOTE: Do something here to start the game
   const snakeInfo = {
     color: '#FFD90F',
-    name: 'Uter',
     head_url: 'http://www.simpsonspark.com/images/persos/contributions/uter-22544.jpg',
     head_type: 'safe',
     tail_type: 'round-bum',
@@ -38,15 +31,7 @@ router.post('/start', function (req, res) {
   return res.json(snakeInfo);
 })
 
-// Need:
-// Find closest food
-// Move to food
-// When close circle food if health is high
-// Eat food if health is low
-
-// Handle POST request to '/move'
 router.post('/move', function (req, res) {
-  // NOTE: Do something here to generate your move
   const gameState = req.body;
   const myHead = {
     x: gameState.you.body.data[0].x,
@@ -88,33 +73,34 @@ router.post('/move', function (req, res) {
     }
   }
 
-  setGrid();
-  function findClosetFood() {
+  function findTarget() {
     // console.log(gameState.food.data);
-    var allFood = [];
+    var allTargets = [];
     for (var i in gameState.food.data) {
       var distance = Math.abs(gameState.food.data[i].x - myHead.x) + Math.abs(gameState.food.data[i].y - myHead.y);
       // console.log('distance', distance);
-      allFood.push({
+      allTargets.push({
         x: gameState.food.data[i].x,
         y: gameState.food.data[i].y,
         distance: distance
       })
     }
-    allFood.sort(function (a, b) {
+    allTargets.sort(function (a, b) {
       return a.distance - b.distance;
     });
-    return allFood[0];
+    return allTargets[0];
   }
-  const closestFood = findClosetFood();
-  const finder = new PF.AStarFinder;
+
+  setGrid();
+  const closestTarget = findTarget();
+  const finder = new PF.DijkstraFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestFood.x, closestFood.y, grid);
   
   function setMove() {
     if (path[1][0] === myHead.x && path[1][1] === myHead.y + 1) {
-      return 'down'; //potential y-axis inversion
+      return 'down'; 
     } else if (path[1][0] === myHead.x && path[1][1] === myHead.y - 1) {
-      return 'up'; //potential y-axis inversion
+      return 'up'; 
     } else if (path[1][0] === myHead.x + 1 && path[1][1] === myHead.y) {
       return 'right';
     } else if (path[1][0] === myHead.x - 1 && path[1][1] === myHead.y) {
@@ -123,13 +109,12 @@ router.post('/move', function (req, res) {
       return 'up';
     }
   }
-  // Response data
-  const data = {
+  const snakeResponse = {
     move: setMove(),
-    taunt: taunts[6]
+    taunt: taunts[3]
   }
 
-  return res.json(data)
+  return res.json(snakeResponse)
 })
 
 module.exports = router
