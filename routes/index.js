@@ -57,7 +57,7 @@ router.post('/move', function (req, res) {
 
   function setGrid() {
     //Mark my snake in grid
-    for (var i = 1; i < gameState.you.body.data.length; i++) {
+    for (var i = 1; i < gameState.you.body.data.length - 1; i++) {
       grid.setWalkableAt(gameState.you.body.data[i].x, gameState.you.body.data[i].y, false);
     }
     //Mark other snake heads
@@ -107,7 +107,7 @@ router.post('/move', function (req, res) {
     return allFood[0];
   }
   const closestFood = findClosetFood();
-  const finder = new PF.AStarFinder;
+  const finder = new PF.BestFirstFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestFood.x, closestFood.y, grid);
   
   function setMove() {
@@ -126,7 +126,7 @@ router.post('/move', function (req, res) {
   // Response data
   const data = {
     move: setMove(),
-    taunt: getTaunt()
+    taunt: taunts[6]
   }
 
   return res.json(data)
