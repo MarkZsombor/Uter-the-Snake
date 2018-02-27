@@ -97,50 +97,50 @@ router.post('/move', function (req, res) {
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
   const snakeResponse = [];
 
-  if (!path.length) {
-    var possibleMoves = [
-      {
-        direction: "up",
-        x: myHead.x,
-        y: myHead.y - 1,
-        valid: true
-      },
-      {
-        direction: "down",
-        x: myHead.x,
-        y: myHead.y + 1,
-        valid: true
-      },
-      {
-        direction: "left",
-        x: myHead.x - 1,
-        y: myHead.y,
-        valid: true
-      },
-      {
-        direction: "right",
-        x: myHead.x + 1,
-        y: myHead.y,
-        valid: true
-      },
-    ]
-    var validMoves = [];
-    for (var i in possibleMoves) {
-      possibleMoves[i].valid = grid.nodes[possibleMoves[i].y][possibleMoves[i].x].walkable;
-      if (possibleMoves[i].valid) {
-        validMoves.push(possibleMoves[i]);
-      }
-    }
-    function getPlanB() {
-      const moveIndex = Math.floor(Math.random() * (validMoves.length));
-      return validMoves[moveIndex].direction;
-    }
+  // if (!path.length) {
+  //   var possibleMoves = [
+  //     {
+  //       direction: "up",
+  //       x: myHead.x,
+  //       y: myHead.y - 1,
+  //       valid: true
+  //     },
+  //     {
+  //       direction: "down",
+  //       x: myHead.x,
+  //       y: myHead.y + 1,
+  //       valid: true
+  //     },
+  //     {
+  //       direction: "left",
+  //       x: myHead.x - 1,
+  //       y: myHead.y,
+  //       valid: true
+  //     },
+  //     {
+  //       direction: "right",
+  //       x: myHead.x + 1,
+  //       y: myHead.y,
+  //       valid: true
+  //     },
+  //   ]
+  //   var validMoves = [];
+  //   for (var i in possibleMoves) {
+  //     possibleMoves[i].valid = grid.nodes[possibleMoves[i].y][possibleMoves[i].x].walkable;
+  //     if (possibleMoves[i].valid) {
+  //       validMoves.push(possibleMoves[i]);
+  //     }
+  //   }
+  //   function getPlanB() {
+  //     const moveIndex = Math.floor(Math.random() * (validMoves.length));
+  //     return validMoves[moveIndex].direction;
+  //   }
 
-    snakeResponse.move = getPlanB();
-    snakeResponse.taunt = taunts[5];
-    // return res.json(snakeResponse)
+  //   snakeResponse.move = getPlanB();
+  //   snakeResponse.taunt = taunts[5];
+  //   // return res.json(snakeResponse)
 
-  } else {
+  // } else {
     function setMove() {
       if (path[1][0] === myHead.x && path[1][1] === myHead.y + 1) {
         return 'down'; 
@@ -158,7 +158,7 @@ router.post('/move', function (req, res) {
     snakeResponse.move = setMove();
     snakeResponse.taunt = taunts[3];
 
-  }
+  // }
   return res.json(snakeResponse)
 })
 
