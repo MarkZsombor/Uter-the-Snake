@@ -93,8 +93,8 @@ router.post('/move', function (req, res) {
 
   setGrid();
   const closestTarget = findTarget();
-  const finder = new PF.DijkstraFinder;
-  const path = finder.findPath(myHead.x, myHead.y, closestFood.x, closestFood.y, grid);
+  const finder = new PF.AStarFinder;
+  const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
   
   function setMove() {
     if (path[1][0] === myHead.x && path[1][1] === myHead.y + 1) {
