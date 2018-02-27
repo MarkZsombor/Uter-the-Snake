@@ -1,7 +1,7 @@
 {
   "name": "uter-the-snake",
   "description": "A simple BattleSnake AI written in Javascript for NodeJS by Mark Zsombor",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "author": "MarkZsombor",
   "repository": "https://github.com/MarkZsombor/battlesnake-node",
