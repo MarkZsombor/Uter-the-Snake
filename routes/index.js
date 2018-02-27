@@ -95,7 +95,8 @@ router.post('/move', function (req, res) {
   const closestTarget = findTarget();
   const finder = new PF.AStarFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
-  
+  const snakeResponse = [];
+
   if (!path.length) {
     var possibleMoves = [
       {
@@ -135,31 +136,30 @@ router.post('/move', function (req, res) {
       return validMoves[moveIndex].direction;
     }
 
-    const snakeResponse = {
-      move: getPlanB(),
-      taunt: taunts[5]
+    snakeResponse.move = getPlanB();
+    snakeResponse.taunt = taunts[5];
+    return res.json(snakeResponse)
+
+  } else {
+    function setMove() {
+      if (path[1][0] === myHead.x && path[1][1] === myHead.y + 1) {
+        return 'down'; 
+      } else if (path[1][0] === myHead.x && path[1][1] === myHead.y - 1) {
+        return 'up'; 
+      } else if (path[1][0] === myHead.x + 1 && path[1][1] === myHead.y) {
+        return 'right';
+      } else if (path[1][0] === myHead.x - 1 && path[1][1] === myHead.y) {
+        return 'left';
+      } else {
+        return 'up';
+      }
     }
+    
+    snakeResponse.move = setMove();
+    snakeResponse.taunt = taunts[3];
+
     return res.json(snakeResponse)
   }
-  function setMove() {
-    if (path[1][0] === myHead.x && path[1][1] === myHead.y + 1) {
-      return 'down'; 
-    } else if (path[1][0] === myHead.x && path[1][1] === myHead.y - 1) {
-      return 'up'; 
-    } else if (path[1][0] === myHead.x + 1 && path[1][1] === myHead.y) {
-      return 'right';
-    } else if (path[1][0] === myHead.x - 1 && path[1][1] === myHead.y) {
-      return 'left';
-    } else {
-      return 'up';
-    }
-  }
-  const snakeResponse = {
-    move: setMove(),
-    taunt: taunts[3]
-  }
-
-  return res.json(snakeResponse)
 })
 
 module.exports = router
