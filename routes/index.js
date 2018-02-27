@@ -24,8 +24,8 @@ router.post('/start', function (req, res) {
   const snakeInfo = {
     color: '#FFD90F',
     head_url: 'http://www.simpsonspark.com/images/persos/contributions/uter-22544.jpg',
-    head_type: 'safe',
-    tail_type: 'round-bum',
+    head_type: 'smile',
+    tail_type: 'fat-rattle',
     taunt: taunts[0],
   }
   return res.json(snakeInfo);
