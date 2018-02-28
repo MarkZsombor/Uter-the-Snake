@@ -15,10 +15,7 @@ const taunts = [
   "I begged you to look at mine first!"
 ];
 
-function getTaunt() {
-  const tauntIndex = Math.floor(Math.random() * (taunts.length));
-  return taunts[tauntIndex];
-}
+
 
 router.post('/start', function (req, res) {
   const snakeInfo = {
@@ -33,6 +30,24 @@ router.post('/start', function (req, res) {
 
 router.post('/move', function (req, res) {
   const gameState = req.body;
+
+  // Make Uter say funny things for hilarity
+  function getTaunt() {
+    var tauntIndex = 0;
+    if (gameState.you.health > 95) {
+      tauntIndex = 0;
+    } else if (gameState.you.health < 30) {
+      tauntIndex = 5;
+    } else if (gameState.turn < 50) {
+      tauntIndex = 4;
+    } else if (gameState.turn < 100) {
+      tauntIndex = 2;
+    } else {
+      tauntIndex = 3;
+    }
+    return taunts[tauntIndex];
+  }
+
   const myHead = {
     x: gameState.you.body.data[0].x,
     y: gameState.you.body.data[0].y
@@ -181,7 +196,7 @@ router.post('/move', function (req, res) {
     }
 
     snakeResponse.move = validMoves[0].direction;
-    snakeResponse.taunt = taunts[5];
+    snakeResponse.taunt = taunts[1];
     console.log(snakeResponse);
     return res.json(snakeResponse);
 
@@ -201,7 +216,7 @@ router.post('/move', function (req, res) {
     }
 
     snakeResponse.move = setMove();
-    snakeResponse.taunt = taunts[3];
+    snakeResponse.taunt = getTaunt();
     // console.log(snakeResponse);
     return res.json(snakeResponse);
 

@@ -1320,6 +1320,21 @@ const taunts = [
 	"I begged you to look at mine first!"
 ];
 
+function getTaunt() {
+	var tauntIndex = 0;
+	if (gameState.you.health > 90){
+		tauntIndex = 0;
+	} else if (gameState.you.health < 30) {
+		tauntIndex = 5;
+	} else if (gameState.turn < 50) {
+		tauntIndex = 4;
+	} else if (gameState.turn < 100) {
+		tauntIndex = 2;
+	} else {
+		tauntIndex = 3;
+	}
+	return taunts[tauntIndex];
+}
 // const myHead = {
 // 	x: gameState.you.body.data[0].x,
 // 	y: gameState.you.body.data[0].y
@@ -1752,7 +1767,7 @@ if (!path.length) {
 	}
 
 	snakeResponse.move = setMove();
-	snakeResponse.taunt = taunts[3];
+	snakeResponse.taunt = taunts[getTaunt()];
 
 }
 console.log(snakeResponse);
