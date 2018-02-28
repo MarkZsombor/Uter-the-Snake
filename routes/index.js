@@ -69,7 +69,7 @@ router.post('/move', function (req, res) {
           grid.setWalkableAt(allSnakes[snake].body.data[j].x, allSnakes[snake].body.data[j].y, false);
         }
         //Decide on head collision depending on size
-        if (gameState.you.length <= allSnakes[snake].length) {
+        if (gameState.you.length < allSnakes[snake].length) {
           //Pathfinding will throw an error if we try to set a space outside the board
           if (allSnakes[snake].body.data[0].x + 1 < gameState.width) {
             grid.setWalkableAt((allSnakes[snake].body.data[0].x + 1), allSnakes[snake].body.data[0].y, false);
