@@ -141,10 +141,10 @@ router.post('/move', function (req, res) {
     function checkEdges() {
       for (var move in possibleMoves) {
         // console.log('yup')
-        if (possibleMoves[move].x < 0 || possibleMoves[move].x > gameState.width) {
+        if (possibleMoves[move].x < 0 || possibleMoves[move].x >= gameState.width) {
           possibleMoves[move].valid = false;
         }
-        if (possibleMoves[move].y < 0 || possibleMoves[move].y > gameState.height) {
+        if (possibleMoves[move].y < 0 || possibleMoves[move].y >= gameState.height) {
           possibleMoves[move].valid = false;
         }
       }
