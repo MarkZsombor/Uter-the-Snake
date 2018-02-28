@@ -95,7 +95,7 @@ router.post('/move', function (req, res) {
   const closestTarget = findTarget();
   const finder = new PF.AStarFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
-  const snakeResponse = [];
+  const snakeResponse = {};
 
   // if (!path.length) {
   //   var possibleMoves = [
@@ -159,7 +159,8 @@ router.post('/move', function (req, res) {
     snakeResponse.taunt = taunts[3];
 
   // }
-  return res.json(snakeResponse)
+  console.log(snakeResponse);
+  return res.json(snakeResponse);
 })
 
 module.exports = router
