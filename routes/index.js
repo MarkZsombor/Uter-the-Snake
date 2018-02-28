@@ -69,7 +69,7 @@ router.post('/move', function (req, res) {
           grid.setWalkableAt(allSnakes[snake].body.data[j].x, allSnakes[snake].body.data[j].y, false);
         }
         //Decide on head collision depending on size
-        if (gameState.you.length < allSnakes[snake].length) {
+        if (gameState.you.length <= allSnakes[snake].length) {
           //Pathfinding will throw an error if we try to set a space outside the board
           if (allSnakes[snake].body.data[0].x + 1 < gameState.width) {
             grid.setWalkableAt((allSnakes[snake].body.data[0].x + 1), allSnakes[snake].body.data[0].y, false);
@@ -112,7 +112,8 @@ router.post('/move', function (req, res) {
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
   const snakeResponse = {};
 
-  if (!path.length) {
+  // if (!path.length) {
+  if (!path.length || (path.length === 2 && !grid.nodes[path[0][1]][path[0][0]].walkable)) {
     // console.log('NO ROUTE')
     var possibleMoves = [
       {
