@@ -97,50 +97,95 @@ router.post('/move', function (req, res) {
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
   const snakeResponse = {};
 
-  // if (!path.length) {
-  //   var possibleMoves = [
-  //     {
-  //       direction: "up",
-  //       x: myHead.x,
-  //       y: myHead.y - 1,
-  //       valid: true
-  //     },
-  //     {
-  //       direction: "down",
-  //       x: myHead.x,
-  //       y: myHead.y + 1,
-  //       valid: true
-  //     },
-  //     {
-  //       direction: "left",
-  //       x: myHead.x - 1,
-  //       y: myHead.y,
-  //       valid: true
-  //     },
-  //     {
-  //       direction: "right",
-  //       x: myHead.x + 1,
-  //       y: myHead.y,
-  //       valid: true
-  //     },
-  //   ]
-  //   var validMoves = [];
-  //   for (var i in possibleMoves) {
-  //     possibleMoves[i].valid = grid.nodes[possibleMoves[i].y][possibleMoves[i].x].walkable;
-  //     if (possibleMoves[i].valid) {
-  //       validMoves.push(possibleMoves[i]);
-  //     }
-  //   }
-  //   function getPlanB() {
-  //     const moveIndex = Math.floor(Math.random() * (validMoves.length));
-  //     return validMoves[moveIndex].direction;
-  //   }
+  if (!path.length) {
+    // console.log('NO ROUTE')
+    var possibleMoves = [
+      {
+        direction: "right",
+        x: myHead.x + 1,
+        y: myHead.y,
+        valid: true
+      },
+      {
+        direction: "down",
+        x: myHead.x,
+        y: myHead.y + 1,
+        valid: true
+      },
+      {
+        direction: "left",
+        x: myHead.x - 1,
+        y: myHead.y,
+        valid: true
+      },
+      {
+        direction: "up",
+        x: myHead.x,
+        y: myHead.y - 1,
+        valid: true
+      },
+    ];
 
-  //   snakeResponse.move = getPlanB();
-  //   snakeResponse.taunt = taunts[5];
-  //   // return res.json(snakeResponse)
+    // Stop the snake from running into itself
+    function checkSelf() {
+      for (var i = 0; i < gameState.you.body.data.length; i++) {
+        for (var move in possibleMoves) {
+          if (possibleMoves[move].x === gameState.you.body.data[i].x && possibleMoves[move].y === gameState.you.body.data[i].y) {
+            possibleMoves[move].valid = false;
+          }
+        }
+      }
+    }
 
-  // } else {
+    //Stop from running into wall
+    function checkEdges() {
+      for (var move in possibleMoves) {
+        // console.log('yup')
+        if (possibleMoves[move].x < 0 || possibleMoves[move].x > gameState.width) {
+          possibleMoves[move].valid = false;
+        }
+        if (possibleMoves[move].y < 0 || possibleMoves[move].y > gameState.height) {
+          possibleMoves[move].valid = false;
+        }
+      }
+    }
+
+    //check for other snakes
+    function checkSnakes() {
+      var allSnakes = gameState.snakes.data
+      for (var snake in allSnakes) {
+        if (allSnakes[snake].id !== gameState.you.id) {
+          // console.log('Found enemy')
+          // console.log(allSnakes[snake]);
+          //Don't run into body
+          for (var i = 0; i < allSnakes[snake].body.data.length; i++) {
+            for (var move in possibleMoves) {
+              if (possibleMoves[move].x === allSnakes[snake].body.data[i].x && possibleMoves[move].y === allSnakes[snake].body.data[i].y) {
+                possibleMoves[move].valid = false;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    checkSelf();
+    checkEdges();
+    checkSnakes();
+
+    var validMoves = [];
+    for (var i in possibleMoves) {
+      if (possibleMoves[i].valid) {
+        validMoves.push(possibleMoves[i]);
+      }
+    }
+
+    snakeResponse.move = validMoves[0].direction;
+    snakeResponse.taunt = taunts[5];
+    console.log(snakeResponse);
+    return res.json(snakeResponse);
+
+  } else {
     function setMove() {
       if (path[1][0] === myHead.x && path[1][1] === myHead.y + 1) {
         return 'down'; 
@@ -157,10 +202,10 @@ router.post('/move', function (req, res) {
 
     snakeResponse.move = setMove();
     snakeResponse.taunt = taunts[3];
+    // console.log(snakeResponse);
+    return res.json(snakeResponse);
 
-  // }
-  console.log(snakeResponse);
-  return res.json(snakeResponse);
+  }
 })
 
 module.exports = router
