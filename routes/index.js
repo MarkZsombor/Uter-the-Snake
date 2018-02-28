@@ -1,12 +1,12 @@
-var express = require('express')
-var router  = express.Router()
-var bodyParser = require('body-parser')
-var app = express();
-var PF = require('pathfinding');
+const express = require('express')
+const router  = express.Router()
+const bodyParser = require('body-parser')
+const app = express();
+const PF = require('pathfinding');
 
 app.use(bodyParser.json());
 
-var taunts = [
+const taunts = [
   "Don't make me run, I'm full of Chocolate!",
   "I don't deserve this!", 
   "Oh guten tag.",
@@ -16,12 +16,12 @@ var taunts = [
 ];
 
 function getTaunt() {
-  var tauntIndex = Math.floor(Math.random() * (taunts.length));
+  const tauntIndex = Math.floor(Math.random() * (taunts.length));
   return taunts[tauntIndex];
 }
 
 router.post('/start', function (req, res) {
-  var snakeInfo = {
+  const snakeInfo = {
     color: '#FFD90F',
     head_url: 'http://www.simpsonspark.com/images/persos/contributions/uter-22544.jpg',
     head_type: 'smile',
@@ -32,13 +32,13 @@ router.post('/start', function (req, res) {
 })
 
 router.post('/move', function (req, res) {
-  var gameState = req.body;
-  var myHead = {
+  const gameState = req.body;
+  const myHead = {
     x: gameState.you.body.data[0].x,
     y: gameState.you.body.data[0].y
   }
 
-  var grid = new PF.Grid(gameState.width, gameState.height);
+  const grid = new PF.Grid(gameState.width, gameState.height);
 
   function setGrid() {
     //Mark my snake in grid
@@ -46,7 +46,7 @@ router.post('/move', function (req, res) {
       grid.setWalkableAt(gameState.you.body.data[i].x, gameState.you.body.data[i].y, false);
     }
     //Mark other snake heads
-    var allSnakes = gameState.snakes.data
+    const allSnakes = gameState.snakes.data
     for (var snake in allSnakes) {
       if (allSnakes[snake].id !== gameState.you.id) {
         //Don't run into body
@@ -88,19 +88,14 @@ router.post('/move', function (req, res) {
     allTargets.sort(function (a, b) {
       return a.distance - b.distance;
     });
-    return allTargets;
+    return allTargets[0];
   }
 
   setGrid();
-  var closestTarget = findTarget();
-  var finder = new PF.AStarFinder;
-  var path = [];
-  var pathNum = 0;
-  while (!path.length) {
-    path = finder.findPath(myHead.x, myHead.y, targets[pathNum].x, targets[pathNum].y, grid);
-    pathNum++;
-  }
-  var snakeResponse = {};
+  const closestTarget = findTarget();
+  const finder = new PF.AStarFinder;
+  const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
+  const snakeResponse = {};
 
   // if (!path.length) {
   //   var possibleMoves = [
@@ -137,7 +132,7 @@ router.post('/move', function (req, res) {
   //     }
   //   }
   //   function getPlanB() {
-  //     var moveIndex = Math.floor(Math.random() * (validMoves.length));
+  //     const moveIndex = Math.floor(Math.random() * (validMoves.length));
   //     return validMoves[moveIndex].direction;
   //   }
 
