@@ -745,7 +745,7 @@ var gameState = {
 	}
 }
 
-const taunts = [
+var taunts = [
 	"Don't make me run, I'm full of Chocolate!",
 	"I don't deserve this!",
 	"Oh guten tag.",
@@ -754,12 +754,12 @@ const taunts = [
 	"I begged you to look at mine first!"
 ];
 
-const myHead = {
+var myHead = {
 	x: gameState.you.body.data[0].x,
 	y: gameState.you.body.data[0].y
 }
 
-const grid = new PF.Grid(gameState.width, gameState.height);
+var grid = new PF.Grid(gameState.width, gameState.height);
 
 function setGrid() {
 	//Mark my snake in grid
@@ -767,7 +767,7 @@ function setGrid() {
 		grid.setWalkableAt(gameState.you.body.data[i].x, gameState.you.body.data[i].y, false);
 	}
 	//Mark other snake heads
-	const allSnakes = gameState.snakes.data
+	var allSnakes = gameState.snakes.data
 	for (var snake in allSnakes) {
 		if (allSnakes[snake].id !== gameState.you.id) {
 			//Don't run into body
@@ -809,61 +809,66 @@ function findTarget() {
 	allTargets.sort(function (a, b) {
 		return a.distance - b.distance;
 	});
-	return allTargets[0];
+	return allTargets;
 }
 
 setGrid();
-const closestTarget = findTarget();
-const finder = new PF.AStarFinder;
-const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
-// console.log('the path', path, path.length);
+var targets = findTarget();
+var finder = new PF.AStarFinder;
+var path = [];
+// console.log('the path', path, path.length
 
-const snakeResponse = {};
-if(!path.length) {
-	var possibleMoves = [
-		{
-			direction: "up",
-			x: myHead.x,
-			y: myHead.y - 1,
-			valid: true
-		},
-		{
-			direction: "down",
-			x: myHead.x,
-			y: myHead.y + 1,
-			valid: true
-		},
-		{
-			direction: "left",
-			x: myHead.x - 1,
-			y: myHead.y,
-			valid: true
-		},
-		{
-			direction: "right",
-			x: myHead.x + 1,
-			y: myHead.y,
-			valid: true
-		},
-  ]
-  var validMoves = [];
-  for (var i in possibleMoves) {
-    possibleMoves[i].valid = grid.nodes[possibleMoves[i].y][possibleMoves[i].x].walkable;
-    if (possibleMoves[i].valid) { 
-      validMoves.push(possibleMoves[i]);
-    }
-	}
-	console.log(validMoves)
-  function getPlanB() {
-    const moveIndex = Math.floor(Math.random() * (validMoves.length));
-    return validMoves[moveIndex].direction;
-  }
+var pathNum = 0;
+while (!path.length) {
+	path = finder.findPath(myHead.x, myHead.y, targets[pathNum].x, targets[pathNum].y, grid);
+	pathNum ++;
+}
+var snakeResponse = {};
+// if(!path.length) {
+// 	var possibleMoves = [
+// 		{
+// 			direction: "up",
+// 			x: myHead.x,
+// 			y: myHead.y - 1,
+// 			valid: true
+// 		},
+// 		{
+// 			direction: "down",
+// 			x: myHead.x,
+// 			y: myHead.y + 1,
+// 			valid: true
+// 		},
+// 		{
+// 			direction: "left",
+// 			x: myHead.x - 1,
+// 			y: myHead.y,
+// 			valid: true
+// 		},
+// 		{
+// 			direction: "right",
+// 			x: myHead.x + 1,
+// 			y: myHead.y,
+// 			valid: true
+// 		},
+//   ]
+//   var validMoves = [];
+//   for (var i in possibleMoves) {
+//     possibleMoves[i].valid = grid.nodes[possibleMoves[i].y][possibleMoves[i].x].walkable;
+//     if (possibleMoves[i].valid) { 
+//       validMoves.push(possibleMoves[i]);
+//     }
+// 	}
+// 	console.log(validMoves)
+//   function getPlanB() {
+//     var moveIndex = Math.floor(Math.random() * (validMoves.length));
+//     return validMoves[moveIndex].direction;
+//   }
 
-	snakeResponse.move = getPlanB();
-	snakeResponse.taunt= taunts[5];
-  console.log('plan b\n')
+// 	snakeResponse.move = getPlanB();
+// 	snakeResponse.taunt= taunts[5];
+//   console.log('plan b\n')
 
-} else {
+// } else {
 function setMove() {
 	if (path[1][0] === myHead.x && path[1][1] === myHead.y + 1) {
 		return 'down';
@@ -881,7 +886,7 @@ function setMove() {
 snakeResponse.move = setMove();
 snakeResponse.taunt = taunts[3];
 console.log('plan a\n')
-}
+// }
 
 console.log(snakeResponse)
 
