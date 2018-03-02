@@ -181,6 +181,23 @@ router.post('/move', function (req, res) {
               }
             }
           }
+          //Decide on head collision depending on size
+          if (allSnakes[snake].length >= gameState.you.length) {
+            for (var move in possibleMoves) {
+              if (possibleMoves[move].x === allSnakes[snake].body.data[0].x + 1 && possibleMoves[move].y === allSnakes[snake].body.data[0].y) {
+                possibleMoves[move].valid = false;
+              }
+              if (possibleMoves[move].x === allSnakes[snake].body.data[0].x - 1 && possibleMoves[move].y === allSnakes[snake].body.data[0].y) {
+                possibleMoves[move].valid = false;
+              }
+              if (possibleMoves[move].x === allSnakes[snake].body.data[0].x && possibleMoves[move].y === allSnakes[snake].body.data[0].y + 1) {
+                possibleMoves[move].valid = false;
+              }
+              if (possibleMoves[move].x === allSnakes[snake].body.data[0].x && possibleMoves[move].y === allSnakes[snake].body.data[0].y - 1) {
+                possibleMoves[move].valid = false;
+              }
+            }
+          }
         }
       }
     }
