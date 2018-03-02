@@ -99,11 +99,16 @@ router.post('/move', function (req, res) {
     // console.log(gameState.food.data);
     var allTargets = [];
     for (var i in gameState.food.data) {
+      var distance = getDistance(gameState.food.data[i].x, gameState.food.data[i].y);
+      if (!gameState.food.data[i].x || !gameState.food.data[i].y || gameState.food.data[i].x === gameState.width - 1 || gameState.food.data[i].y === gameState.height - 1) {
+        distance += 10
+      }
       allTargets.push({
         x: gameState.food.data[i].x,
         y: gameState.food.data[i].y,
-        distance: getDistance(gameState.food.data[i].x, gameState.food.data[i].y)
-      })
+        distance: distance
+      });
+
     }
     allTargets.sort(function (a, b) {
       return a.distance - b.distance;
