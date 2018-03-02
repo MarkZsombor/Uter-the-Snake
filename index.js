@@ -37,7 +37,7 @@ app.use(function (err, req, res, next) {
   res.status(404)
   res.send({
     status: 404,
-    error: err.message || "These are not the snakes you're looking for, you must find Uter!"
+    error: err.message || "This is the home of Uter the snake. Check out battlesnake.io to find out more"
   })
 
   return
