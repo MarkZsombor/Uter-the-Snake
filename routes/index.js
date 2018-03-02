@@ -72,7 +72,7 @@ router.post('/move', function (req, res) {
           grid.setWalkableAt(allSnakes[snake].body.data[j].x, allSnakes[snake].body.data[j].y, false);
         }
         //Could we run into the head this turn
-        if (getDistance(allSnakes[snake].body.x, allSnakes[snake].body.y) == 2) {
+        if (getDistance(allSnakes[snake].body.data[0].x, allSnakes[snake].body.data[0].y) === 2) {
 
           //Decide on head collision depending on size    
           if (gameState.you.length <= allSnakes[snake].length) {
