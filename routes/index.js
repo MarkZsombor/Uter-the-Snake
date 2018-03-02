@@ -53,6 +53,9 @@ router.post('/move', function (req, res) {
     y: gameState.you.body.data[0].y
   }
 
+  //Determines the distance from the snakes head to something
+  const getDistance = (a, b) => (Math.abs(a - myHead.x) + Math.abs(b - myHead.y));
+
   const grid = new PF.Grid(gameState.width, gameState.height);
 
   function setGrid() {
@@ -68,20 +71,24 @@ router.post('/move', function (req, res) {
         for (var j = 0; j < allSnakes[snake].body.data.length; j++) {
           grid.setWalkableAt(allSnakes[snake].body.data[j].x, allSnakes[snake].body.data[j].y, false);
         }
-        //Decide on head collision depending on size
-        if (gameState.you.length <= allSnakes[snake].length) {
-          //Pathfinding will throw an error if we try to set a space outside the board
-          if (allSnakes[snake].body.data[0].x + 1 < gameState.width) {
-            grid.setWalkableAt((allSnakes[snake].body.data[0].x + 1), allSnakes[snake].body.data[0].y, false);
-          }
-          if (allSnakes[snake].body.data[0].x - 1 >= 0) {
-            grid.setWalkableAt((allSnakes[snake].body.data[0].x - 1), allSnakes[snake].body.data[0].y, false);
-          }
-          if (allSnakes[snake].body.data[0].y + 1 < gameState.height) {
-            grid.setWalkableAt(allSnakes[snake].body.data[0].x, (allSnakes[snake].body.data[0].y + 1), false);
-          }
-          if (allSnakes[snake].body.data[0].y - 1 >= 0) {
-            grid.setWalkableAt(allSnakes[snake].body.data[0].x, (allSnakes[snake].body.data[0].y - 1), false);
+        //Could we run into the head this turn
+        if (getDistance(allSnakes[snake].body.x, allSnakes[snake].body.y) == 2) {
+
+          //Decide on head collision depending on size    
+          if (gameState.you.length <= allSnakes[snake].length) {
+            //Pathfinding will throw an error if we try to set a space outside the board
+            if (allSnakes[snake].body.data[0].x + 1 < gameState.width) {
+              grid.setWalkableAt((allSnakes[snake].body.data[0].x + 1), allSnakes[snake].body.data[0].y, false);
+            }
+            if (allSnakes[snake].body.data[0].x - 1 >= 0) {
+              grid.setWalkableAt((allSnakes[snake].body.data[0].x - 1), allSnakes[snake].body.data[0].y, false);
+            }
+            if (allSnakes[snake].body.data[0].y + 1 < gameState.height) {
+              grid.setWalkableAt(allSnakes[snake].body.data[0].x, (allSnakes[snake].body.data[0].y + 1), false);
+            }
+            if (allSnakes[snake].body.data[0].y - 1 >= 0) {
+              grid.setWalkableAt(allSnakes[snake].body.data[0].x, (allSnakes[snake].body.data[0].y - 1), false);
+            }
           }
         }
       }
@@ -92,17 +99,16 @@ router.post('/move', function (req, res) {
     // console.log(gameState.food.data);
     var allTargets = [];
     for (var i in gameState.food.data) {
-      var distance = Math.abs(gameState.food.data[i].x - myHead.x) + Math.abs(gameState.food.data[i].y - myHead.y);
-      // console.log('distance', distance);
       allTargets.push({
         x: gameState.food.data[i].x,
         y: gameState.food.data[i].y,
-        distance: distance
+        distance: getDistance(gameState.food.data[i].x, gameState.food.data[i].y)
       })
     }
     allTargets.sort(function (a, b) {
       return a.distance - b.distance;
     });
+    // console.log(allTargets)
     return allTargets[0];
   }
 
@@ -112,7 +118,6 @@ router.post('/move', function (req, res) {
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
   const snakeResponse = {};
 
-  // if (!path.length) {
   if (!path.length || (path.length === 2 && !grid.nodes[path[0][1]][path[0][0]].walkable)) {
     // console.log('NO ROUTE')
     var possibleMoves = [
