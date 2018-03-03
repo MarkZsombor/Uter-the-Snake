@@ -139,20 +139,18 @@ router.post('/move', function (req, res) {
 
   // Checks current health to switch between tail chasing and food chasing.
   function chooseTarget() {
-
-    // If health is over 75 chase tail
-    if (gameState.you.health > 50){
-
-      return findTail();
+    console.log('total snakes', gameState.snakes.data.length)
+    if (gameState.snakes.data.length == 2) {
+      if (gameState.you.health > 50) {
+        return findTail();
+      }
     } else {
       return findFood();
-
     }
-
   }
 
   setGrid();
-  const closestTarget = findFood();
+  const closestTarget = chooseTarget();
   const finder = new PF.AStarFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
   const snakeResponse = {};

@@ -1,62 +1,24 @@
 var PF = require('pathfinding');
 
 var gameState = {
-	"width": 10,
-	"height": 17,
-	"id": 7318,
-	"turn": 7,
+	"width": 21,
+	"height": 11,
+	"id": 7425,
+	"turn": 0,
 	"snakes": {
 		"data": [
 			{
-				"id": "1e93d59c-1a83-487f-ac9d-0a7ca278ca9e",
-				"health": 97,
-				"length": 5,
-				"taunt": "\"up\"",
-				"name": "TR_Tester",
-				"object": "snake",
-				"body": {
-					"data": [
-						{
-							"object": "point",
-							"x": 1,
-							"y": 2
-						},
-						{
-							"object": "point",
-							"x": 1,
-							"y": 3
-						},
-						{
-							"object": "point",
-							"x": 2,
-							"y": 3
-						},
-						{
-							"object": "point",
-							"x": 3,
-							"y": 3
-						},
-						{
-							"object": "point",
-							"x": 4,
-							"y": 3
-						}
-					],
-					"object": "list"
-				}
-			},
-			{
-				"id": "7c855e7a-9b60-46dc-8b30-381ecf26afba",
+				"id": "157ac683-1a2c-4aac-90b0-4c1707479e59",
 				"health": 100,
-				"length": 5,
-				"taunt": "\"Moving left, targeting Food\"",
-				"name": "Slashterix",
+				"length": 3,
+				"taunt": "\"battlesnake-go!\"",
+				"name": "Snake Charmer v2",
 				"object": "snake",
 				"body": {
 					"data": [
 						{
 							"object": "point",
-							"x": 3,
+							"x": 4,
 							"y": 6
 						},
 						{
@@ -66,117 +28,92 @@ var gameState = {
 						},
 						{
 							"object": "point",
-							"x": 5,
+							"x": 4,
 							"y": 6
-						},
-						{
-							"object": "point",
-							"x": 5,
-							"y": 7
-						},
-						{
-							"object": "point",
-							"x": 5,
-							"y": 7
 						}
 					],
 					"object": "list"
 				}
 			},
 			{
-				"id": "a3a3d33c-3d4d-4424-847d-cab2a60f37d7",
-				"health": 99,
-				"length": 4,
-				"taunt": "\"The body of mind slips on a banana peel.\"",
-				"name": "dsnek",
+				"id": "13f17371-7f36-475e-b3be-fb67399ee814",
+				"health": 100,
+				"length": 3,
+				"taunt": "\"Don't make me run, I'm full of Chocolate!\"",
+				"name": "Timid Uter",
 				"object": "snake",
 				"body": {
 					"data": [
 						{
 							"object": "point",
-							"x": 0,
+							"x": 13,
 							"y": 5
 						},
 						{
 							"object": "point",
-							"x": 0,
-							"y": 4
+							"x": 13,
+							"y": 5
 						},
 						{
 							"object": "point",
-							"x": 1,
-							"y": 4
-						},
-						{
-							"object": "point",
-							"x": 2,
-							"y": 4
+							"x": 13,
+							"y": 5
 						}
 					],
 					"object": "list"
 				}
 			},
 			{
-				"id": "38747a0d-388d-43cc-a2e4-938f0c8ccb53",
-				"health": 98,
-				"length": 5,
-				"taunt": "\"Don't make me run, I'm full of Chocolate!\"",
-				"name": "Uter",
+				"id": "90bc6875-358f-4cfe-adff-03ed1f4f0f49",
+				"health": 100,
+				"length": 3,
+				"taunt": "\"Bears, Beets, Battlestar Galactica\"",
+				"name": "Dwight",
 				"object": "snake",
 				"body": {
 					"data": [
 						{
 							"object": "point",
-							"x": 4,
+							"x": 9,
 							"y": 7
 						},
 						{
 							"object": "point",
-							"x": 4,
-							"y": 8
+							"x": 9,
+							"y": 7
 						},
 						{
 							"object": "point",
-							"x": 4,
-							"y": 9
-						},
-						{
-							"object": "point",
-							"x": 4,
-							"y": 10
-						},
-						{
-							"object": "point",
-							"x": 5,
-							"y": 10
+							"x": 9,
+							"y": 7
 						}
 					],
 					"object": "list"
 				}
 			},
 			{
-				"id": "c5a3b4c8-9dbf-43f4-8605-600c9c18739e",
-				"health": 93,
+				"id": "d9979736-9e2e-4419-b156-e2f808bbf7c3",
+				"health": 100,
 				"length": 3,
-				"taunt": "\"battlesnake-python!\"",
-				"name": "Suicide",
+				"taunt": "\"404 - Taunt not found\"",
+				"name": "whelp aggro",
 				"object": "snake",
 				"body": {
 					"data": [
 						{
 							"object": "point",
-							"x": 1,
-							"y": 8
+							"x": 12,
+							"y": 10
 						},
 						{
 							"object": "point",
-							"x": 0,
-							"y": 8
+							"x": 12,
+							"y": 10
 						},
 						{
 							"object": "point",
-							"x": 0,
-							"y": 9
+							"x": 12,
+							"y": 10
 						}
 					],
 					"object": "list"
@@ -189,115 +126,89 @@ var gameState = {
 		"data": [
 			{
 				"object": "point",
-				"x": 1,
-				"y": 16
+				"x": 9,
+				"y": 9
 			},
 			{
 				"object": "point",
 				"x": 2,
-				"y": 13
+				"y": 3
 			},
 			{
 				"object": "point",
-				"x": 9,
-				"y": 12
+				"x": 17,
+				"y": 2
 			},
 			{
 				"object": "point",
-				"x": 3,
-				"y": 13
-			},
-			{
-				"object": "point",
-				"x": 0,
-				"y": 1
-			},
-			{
-				"object": "point",
-				"x": 3,
-				"y": 14
-			},
-			{
-				"object": "point",
-				"x": 8,
-				"y": 16
+				"x": 13,
+				"y": 9
 			},
 			{
 				"object": "point",
 				"x": 7,
-				"y": 6
-			},
-			{
-				"object": "point",
-				"x": 2,
-				"y": 15
-			},
-			{
-				"object": "point",
-				"x": 9,
-				"y": 16
-			},
-			{
-				"object": "point",
-				"x": 9,
-				"y": 0
-			},
-			{
-				"object": "point",
-				"x": 4,
-				"y": 0
-			},
-			{
-				"object": "point",
-				"x": 8,
-				"y": 15
-			},
-			{
-				"object": "point",
-				"x": 1,
-				"y": 11
+				"y": 7
 			}
 		],
 		"object": "list"
 	},
 	"object": "world",
 	"dead_snakes": {
-		"data": [],
+		"data": [
+			{
+				"id": "6263b0e8-ca34-45cb-91c5-279448873556",
+				"health": 100,
+				"length": 3,
+				"taunt": "",
+				"name": "BattleJake",
+				"object": "snake",
+				"body": {
+					"data": [
+						{
+							"object": "point",
+							"x": 1,
+							"y": 1
+						},
+						{
+							"object": "point",
+							"x": 1,
+							"y": 1
+						},
+						{
+							"object": "point",
+							"x": 1,
+							"y": 1
+						}
+					],
+					"object": "list"
+				}
+			}
+		],
 		"object": "list"
 	},
 	"you": {
-		"id": "38747a0d-388d-43cc-a2e4-938f0c8ccb53",
-		"health": 98,
-		"length": 5,
+		"id": "13f17371-7f36-475e-b3be-fb67399ee814",
+		"health": 100,
+		"length": 3,
 		"taunt": "\"Don't make me run, I'm full of Chocolate!\"",
-		"name": "Uter",
+		"name": "Timid Uter",
 		"object": "snake",
 		"body": {
 			"data": [
 				{
 					"object": "point",
-					"x": 4,
-					"y": 7
+					"x": 13,
+					"y": 5
 				},
 				{
 					"object": "point",
-					"x": 4,
-					"y": 8
+					"x": 13,
+					"y": 5
 				},
 				{
 					"object": "point",
-					"x": 4,
-					"y": 9
-				},
-				{
-					"object": "point",
-					"x": 4,
-					"y": 10
-				},
-				{
-					"object": "point",
-					"x": 5,
-					"y": 10
+					"x": 13,
+					"y": 5
 				}
 			],
 			"object": "list"
@@ -382,7 +293,7 @@ function setGrid() {
 	}
 }
 
-function findTarget() {
+function findFood() {
 	// console.log(gameState.food.data);
 	var allTargets = [];
 	for (var i in gameState.food.data) {
@@ -419,20 +330,18 @@ function findTail() {
 
 // Checks current health to switch between tail chasing and food chasing.
 function chooseTarget() {
-
-	// If health is over 75 chase tail
-	if (gameState.you.health > 50) {
-
-		return findTail();
+	console.log('total snakes', gameState.snakes.data.length)
+	if (gameState.snakes.data.length == 2) {
+		if (gameState.you.health > 50) {
+			return findTail();
+		}
 	} else {
-		return findTarget();
-
-	}
-
+			return findFood();
+		}
 }
 
 setGrid();
-const closestTarget = findTarget();
+const closestTarget = chooseTarget();
 console.log('target', closestTarget)
 const finder = new PF.AStarFinder;
 const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
