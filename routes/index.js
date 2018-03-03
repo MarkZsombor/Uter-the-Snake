@@ -71,11 +71,11 @@ router.post('/move', function (req, res) {
     for (var snake in allSnakes) {
       if (allSnakes[snake].id !== gameState.you.id) {
         //Don't run into body
-        var snakeIndex = allSnakes[snake].body.data.length - 2;
-        if (allSnakes[snake].body.data[snakeIndex + 1].x == allSnakes[snake].body.data[snakeIndex].x && allSnakes[snake].body.data[snakeIndex + 1].y == allSnakes[snake].body.data[snakeIndex].y) {
-          snakeIndex++
-        }
-        for (var j = 0; j < snakeIndex; j++) {
+        // var snakeIndex = allSnakes[snake].body.data.length - 2;
+        // if (allSnakes[snake].body.data[snakeIndex + 1].x == allSnakes[snake].body.data[snakeIndex].x && allSnakes[snake].body.data[snakeIndex + 1].y == allSnakes[snake].body.data[snakeIndex].y) {
+        //   snakeIndex++
+        // }
+        for (var j = 0; j < allSnakes[snake].body.data.length - 1; j++) {
           grid.setWalkableAt(allSnakes[snake].body.data[j].x, allSnakes[snake].body.data[j].y, false);
         }
         //Could we run into the head this turn
@@ -139,20 +139,18 @@ router.post('/move', function (req, res) {
 
   // Checks current health to switch between tail chasing and food chasing.
   function chooseTarget() {
-
-    // If health is over 75 chase tail
-    if (gameState.you.health > 50){
-
-      return findTail();
+    console.log('total snakes', gameState.snakes.data.length)
+    if (gameState.snakes.data.length == 2) {
+      if (gameState.you.health > 50) {
+        return findTail();
+      }
     } else {
       return findFood();
-
     }
-
   }
 
   setGrid();
-  const closestTarget = findFood();
+  const closestTarget = chooseTarget();
   const finder = new PF.AStarFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
   const snakeResponse = {};
