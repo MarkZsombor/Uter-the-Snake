@@ -29,7 +29,7 @@ router.post('/start', function (req, res) {
     taunt: taunts[0],
   }
   return res.json(snakeInfo);
-})
+});
 
 router.post('/move', function (req, res) {
   const gameState = req.body;
@@ -54,7 +54,7 @@ router.post('/move', function (req, res) {
   const myHead = {
     x: gameState.you.body.data[0].x,
     y: gameState.you.body.data[0].y
-  }
+  };
 
   //Determines the distance from the snakes head to something
   const getDistance = (a, b) => (Math.abs(a - myHead.x) + Math.abs(b - myHead.y));
@@ -121,12 +121,34 @@ router.post('/move', function (req, res) {
     allTargets.sort(function (a, b) {
       return a.distance - b.distance;
     });
-    // console.log(allTargets)
     return allTargets[0];
   }
 
+  // Finds your own tail and returns its coordinates for targeting.
+  function findTail() {
+    let snakeBody = gameState.you;
+    let snakeLength = gameState.you.length;
+    let tailPosition = snakeBody.body.data[snakeLength - 1];
+    return tailPosition;
+
+  }
+
+  // Checks current health to switch between tail chasing and food chasing.
+  function chooseTarget() {
+
+    // If health is over 75 chase tail
+    if (gameState.you.health > 50){
+
+      return findTail();
+    } else {
+      return findTarget();
+
+    }
+
+  }
+
   setGrid();
-  const closestTarget = findTarget();
+  const closestTarget = chooseTarget();
   const finder = new PF.AStarFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
   const snakeResponse = {};
