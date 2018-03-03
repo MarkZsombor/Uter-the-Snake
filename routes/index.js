@@ -29,7 +29,7 @@ router.post('/start', function (req, res) {
     taunt: taunts[0],
   }
   return res.json(snakeInfo);
-})
+});
 
 router.post('/move', function (req, res) {
   const gameState = req.body;
@@ -54,7 +54,7 @@ router.post('/move', function (req, res) {
   const myHead = {
     x: gameState.you.body.data[0].x,
     y: gameState.you.body.data[0].y
-  }
+  };
 
   //Determines the distance from the snakes head to something
   const getDistance = (a, b) => (Math.abs(a - myHead.x) + Math.abs(b - myHead.y));
@@ -123,6 +123,13 @@ router.post('/move', function (req, res) {
     });
     // console.log(allTargets)
     return allTargets[0];
+  }
+
+  // TODO: Write Function: findTail();
+  // Chase your tail you dumb snake
+
+  function findTail() {
+    
   }
 
   setGrid();
