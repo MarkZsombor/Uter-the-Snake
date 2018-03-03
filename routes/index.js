@@ -121,28 +121,34 @@ router.post('/move', function (req, res) {
     allTargets.sort(function (a, b) {
       return a.distance - b.distance;
     });
-    // console.log(allTargets)
-    findTail();
-    console.log(allTargets[0]);
     return allTargets[0];
   }
 
-  // TODO: Write Function: findTail();
-  // Chase your tail you dumb snake
-
+  // Finds your own tail and returns its coordinates for targeting.
   function findTail() {
     let snakeBody = gameState.you;
     let snakeLength = gameState.you.length;
     let tailPosition = snakeBody.body.data[snakeLength - 1];
-    // console.log(snakeBody);
-    console.log("Tail at ", tailPosition);
-
     return tailPosition;
 
   }
 
+  // Checks current health to switch between tail chasing and food chasing.
+  function chooseTarget() {
+
+    // If health is over 75 chase tail
+    if (gameState.you.health > 50){
+
+      return findTail();
+    } else {
+      return findTarget();
+
+    }
+
+  }
+
   setGrid();
-  const closestTarget = findTail();
+  const closestTarget = chooseTarget();
   const finder = new PF.AStarFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
   const snakeResponse = {};
