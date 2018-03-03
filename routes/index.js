@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 
 const taunts = [
   "Don't make me run, I'm full of Chocolate!",
-  "I don't deserve this!", 
+  "I don't deserve this!",
   "Oh guten tag.",
   "I also have a bag of marzipan JoyJoys!",
   "Would you like a lick of my flavor wax?",
@@ -37,13 +37,13 @@ router.post('/move', function (req, res) {
   // Make Uter say funny things for hilarity
   function getTaunt() {
     var tauntIndex = 0;
-    if (gameState.you.health > 95) {
+    if (gameState.you.health > 90) {
       tauntIndex = 0;
     } else if (gameState.you.health < 30) {
       tauntIndex = 5;
-    } else if (gameState.turn < 50) {
-      tauntIndex = 4;
     } else if (gameState.turn < 100) {
+      tauntIndex = 4;
+    } else if (gameState.turn < 150) {
       tauntIndex = 2;
     } else {
       tauntIndex = 3;
@@ -67,7 +67,7 @@ router.post('/move', function (req, res) {
       grid.setWalkableAt(gameState.you.body.data[i].x, gameState.you.body.data[i].y, false);
     }
     //Mark other snake heads
-    const allSnakes = gameState.snakes.data
+    var allSnakes = gameState.snakes.data
     for (var snake in allSnakes) {
       if (allSnakes[snake].id !== gameState.you.id) {
         //Don't run into body
@@ -81,7 +81,7 @@ router.post('/move', function (req, res) {
         //Could we run into the head this turn
         if (getDistance(allSnakes[snake].body.data[0].x, allSnakes[snake].body.data[0].y) === 2) {
 
-          //Decide on head collision depending on size    
+          //Decide on head collision depending on size
           if (gameState.you.length <= allSnakes[snake].length) {
             //Pathfinding will throw an error if we try to set a space outside the board
             if (allSnakes[snake].body.data[0].x + 1 < gameState.width) {
@@ -137,22 +137,39 @@ router.post('/move', function (req, res) {
 
   }
 
+
+  //Determine the longest snake
+  function getLongestLength() {
+    var allSnakes = gameState.snakes.data
+    var longestSnake = 0;
+    for (var snake in allSnakes) {
+      if (allSnakes[snake].id !== gameState.you.id) {
+        if (allSnakes[snake].length > longestSnake) {
+          longestSnake = allSnakes[snake].length;
+        }
+      }
+    }
+    return longestSnake;
+  }
+
   // Checks current health to switch between tail chasing and food chasing.
   function chooseTarget() {
-    console.log('total snakes', gameState.snakes.data.length)
+    // if (gameState.you.length < getLongestLength()){
+    //     return findFood();
+    // } else 
     if (gameState.snakes.data.length == 2) {
-      if (gameState.you.health > 50) {
-        return findTail();
-      } else {
-        return findFood();
-      }
+        if (gameState.you.health > 40) {
+            return findTail();
+        } else {
+            return findFood();
+        }
     } else {
-      return findFood();
+        return findFood();
     }
   }
 
   setGrid();
-  const closestTarget = findFood();
+  const closestTarget = chooseTarget();
   const finder = new PF.AStarFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
   const snakeResponse = {};
@@ -303,9 +320,9 @@ router.post('/move', function (req, res) {
   } else {
     function setMove() {
       if (path[1][0] === myHead.x && path[1][1] === myHead.y + 1) {
-        return 'down'; 
+        return 'down';
       } else if (path[1][0] === myHead.x && path[1][1] === myHead.y - 1) {
-        return 'up'; 
+        return 'up';
       } else if (path[1][0] === myHead.x + 1 && path[1][1] === myHead.y) {
         return 'right';
       } else if (path[1][0] === myHead.x - 1 && path[1][1] === myHead.y) {
