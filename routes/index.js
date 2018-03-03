@@ -71,11 +71,11 @@ router.post('/move', function (req, res) {
     for (var snake in allSnakes) {
       if (allSnakes[snake].id !== gameState.you.id) {
         //Don't run into body
-        var snakeIndex = allSnakes[snake].body.data.length - 2;
-        if (allSnakes[snake].body.data[snakeIndex + 1].x == allSnakes[snake].body.data[snakeIndex].x && allSnakes[snake].body.data[snakeIndex + 1].y == allSnakes[snake].body.data[snakeIndex].y) {
-          snakeIndex++
-        }
-        for (var j = 0; j < snakeIndex; j++) {
+        // var snakeIndex = allSnakes[snake].body.data.length - 2;
+        // if (allSnakes[snake].body.data[snakeIndex + 1].x == allSnakes[snake].body.data[snakeIndex].x && allSnakes[snake].body.data[snakeIndex + 1].y == allSnakes[snake].body.data[snakeIndex].y) {
+        //   snakeIndex++
+        // }
+        for (var j = 0; j < allSnakes[snake].body.data.length - 1; j++) {
           grid.setWalkableAt(allSnakes[snake].body.data[j].x, allSnakes[snake].body.data[j].y, false);
         }
         //Could we run into the head this turn
