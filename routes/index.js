@@ -103,6 +103,9 @@ router.post('/move', function (req, res) {
       if (!gameState.food.data[i].x || !gameState.food.data[i].y || gameState.food.data[i].x === gameState.width - 1 || gameState.food.data[i].y === gameState.height - 1) {
         distance += 10
       }
+      if (grid.nodes[gameState.food.data[i].x][gameState.food.data[i].y] && !grid.nodes[gameState.food.data[i].x][gameState.food.data[i].y].walkable) {
+        distance += 100
+      }
       allTargets.push({
         x: gameState.food.data[i].x,
         y: gameState.food.data[i].y,
