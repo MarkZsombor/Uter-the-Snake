@@ -132,6 +132,9 @@ router.post('/move', function (req, res) {
   function findTail() {
     let snakeBody = gameState.you;
     let snakeLength = gameState.you.length;
+    if(snakeLength === 1) {
+      return findFood();
+    }
     let tailPosition = snakeBody.body.data[snakeLength - 1];
     return tailPosition;
 
