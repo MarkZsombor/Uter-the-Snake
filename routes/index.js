@@ -37,13 +37,13 @@ router.post('/move', function (req, res) {
   // Make Uter say funny things for hilarity
   function getTaunt() {
     var tauntIndex = 0;
-    if (gameState.you.health > 95) {
+    if (gameState.you.health > 90) {
       tauntIndex = 0;
     } else if (gameState.you.health < 30) {
       tauntIndex = 5;
-    } else if (gameState.turn < 50) {
-      tauntIndex = 4;
     } else if (gameState.turn < 100) {
+      tauntIndex = 4;
+    } else if (gameState.turn < 150) {
       tauntIndex = 2;
     } else {
       tauntIndex = 3;
@@ -67,7 +67,7 @@ router.post('/move', function (req, res) {
       grid.setWalkableAt(gameState.you.body.data[i].x, gameState.you.body.data[i].y, false);
     }
     //Mark other snake heads
-    const allSnakes = gameState.snakes.data
+    var allSnakes = gameState.snakes.data
     for (var snake in allSnakes) {
       if (allSnakes[snake].id !== gameState.you.id) {
         //Don't run into body
@@ -137,17 +137,34 @@ router.post('/move', function (req, res) {
 
   }
 
+
+  //Determine the longest snake
+  function getLongestLength() {
+    var allSnakes = gameState.snakes.data
+    var longestSnake = 0;
+    for (var snake in allSnakes) {
+      if (allSnakes[snake].id !== gameState.you.id) {
+        if (allSnakes[snake].length > longestSnake) {
+          longestSnake = allSnakes[snake].length;
+        }
+      }
+    }
+    return longestSnake;
+  }
+
   // Checks current health to switch between tail chasing and food chasing.
   function chooseTarget() {
-    console.log('total snakes', gameState.snakes.data.length)
-    if (gameState.snakes.data.length == 2) {
-      if (gameState.you.health > 50) {
-        return findTail();
-      } else {
+    if (gameState.you.length < getLongestLength()){
         return findFood();
-      }
+    }
+    if (gameState.snakes.data.length == 2) {
+        if (gameState.you.health > 40) {
+            return findTail();
+        } else {
+            return findFood();
+        }
     } else {
-      return findFood();
+        return findFood();
     }
   }
 
