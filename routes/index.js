@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 
 const taunts = [
   "Don't make me run, I'm full of Chocolate!",
-  "I don't deserve this!", 
+  "I don't deserve this!",
   "Oh guten tag.",
   "I also have a bag of marzipan JoyJoys!",
   "Would you like a lick of my flavor wax?",
@@ -81,7 +81,7 @@ router.post('/move', function (req, res) {
         //Could we run into the head this turn
         if (getDistance(allSnakes[snake].body.data[0].x, allSnakes[snake].body.data[0].y) === 2) {
 
-          //Decide on head collision depending on size    
+          //Decide on head collision depending on size
           if (gameState.you.length <= allSnakes[snake].length) {
             //Pathfinding will throw an error if we try to set a space outside the board
             if (allSnakes[snake].body.data[0].x + 1 < gameState.width) {
@@ -152,7 +152,7 @@ router.post('/move', function (req, res) {
   }
 
   setGrid();
-  const closestTarget = findFood();
+  const closestTarget = chooseTarget();
   const finder = new PF.AStarFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
   const snakeResponse = {};
@@ -303,9 +303,9 @@ router.post('/move', function (req, res) {
   } else {
     function setMove() {
       if (path[1][0] === myHead.x && path[1][1] === myHead.y + 1) {
-        return 'down'; 
+        return 'down';
       } else if (path[1][0] === myHead.x && path[1][1] === myHead.y - 1) {
-        return 'up'; 
+        return 'up';
       } else if (path[1][0] === myHead.x + 1 && path[1][1] === myHead.y) {
         return 'right';
       } else if (path[1][0] === myHead.x - 1 && path[1][1] === myHead.y) {
