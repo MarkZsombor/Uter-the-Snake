@@ -143,6 +143,8 @@ router.post('/move', function (req, res) {
     if (gameState.snakes.data.length == 2) {
       if (gameState.you.health > 50) {
         return findTail();
+      } else {
+        return findFood();
       }
     } else {
       return findFood();
@@ -252,6 +254,44 @@ router.post('/move', function (req, res) {
     for (var i in possibleMoves) {
       if (possibleMoves[i].valid) {
         validMoves.push(possibleMoves[i]);
+      }
+    }
+
+    if (!validMoves.length) {
+      possibleMoves = [
+        {
+          direction: "right",
+          x: myHead.x + 1,
+          y: myHead.y,
+          valid: true
+        },
+        {
+          direction: "down",
+          x: myHead.x,
+          y: myHead.y + 1,
+          valid: true
+        },
+        {
+          direction: "left",
+          x: myHead.x - 1,
+          y: myHead.y,
+          valid: true
+        },
+        {
+          direction: "up",
+          x: myHead.x,
+          y: myHead.y - 1,
+          valid: true
+        },
+      ];
+      checkSelf();
+      checkEdges();
+      gameState.you.length += 100;
+      checkSnakes();
+      for (var i in possibleMoves) {
+        if (possibleMoves[i].valid) {
+          validMoves.push(possibleMoves[i]);
+        }
       }
     }
 
