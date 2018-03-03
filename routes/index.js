@@ -122,6 +122,8 @@ router.post('/move', function (req, res) {
       return a.distance - b.distance;
     });
     // console.log(allTargets)
+    findTail();
+    console.log(allTargets[0]);
     return allTargets[0];
   }
 
@@ -129,11 +131,18 @@ router.post('/move', function (req, res) {
   // Chase your tail you dumb snake
 
   function findTail() {
-    console.log("Chase meee");
+    let snakeBody = gameState.you;
+    let snakeLength = gameState.you.length;
+    let tailPosition = snakeBody.body.data[snakeLength - 1];
+    // console.log(snakeBody);
+    console.log("Tail at ", tailPosition);
+
+    return tailPosition;
+
   }
 
   setGrid();
-  const closestTarget = findTarget();
+  const closestTarget = findTail();
   const finder = new PF.AStarFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
   const snakeResponse = {};
