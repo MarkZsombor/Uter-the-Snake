@@ -129,7 +129,7 @@ router.post('/move', function (req, res) {
   // Chase your tail you dumb snake
 
   function findTail() {
-    
+    console.log("Chase meee");
   }
 
   setGrid();
