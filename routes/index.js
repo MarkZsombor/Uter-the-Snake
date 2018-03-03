@@ -102,7 +102,7 @@ router.post('/move', function (req, res) {
     }
   }
 
-  function findTarget() {
+  function findFood() {
     // console.log(gameState.food.data);
     var allTargets = [];
     for (var i in gameState.food.data) {
@@ -145,14 +145,14 @@ router.post('/move', function (req, res) {
 
       return findTail();
     } else {
-      return findTarget();
+      return findFood();
 
     }
 
   }
 
   setGrid();
-  const closestTarget = findTarget();
+  const closestTarget = findFood();
   const finder = new PF.AStarFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
   const snakeResponse = {};
