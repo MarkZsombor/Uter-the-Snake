@@ -108,7 +108,7 @@ router.post('/move', function (req, res) {
     for (var i in gameState.food.data) {
       var distance = getDistance(gameState.food.data[i].x, gameState.food.data[i].y);
       if (!gameState.food.data[i].x || !gameState.food.data[i].y || gameState.food.data[i].x === gameState.width - 1 || gameState.food.data[i].y === gameState.height - 1) {
-        distance += 5;
+        distance += 10;
       }
       // if (grid.nodes[gameState.food.data[i].x][gameState.food.data[i].y]) {
       //   if (!grid.nodes[gameState.food.data[i].x][gameState.food.data[i].y].walkable) {
