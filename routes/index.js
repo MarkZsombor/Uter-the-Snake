@@ -15,7 +15,10 @@ const taunts = [
   "I begged you to look at mine first!"
 ];
 
-
+//Johnnie's contribution
+router.post('/end', (req, res) => {
+  return res.sendStatus(200);
+});
 
 router.post('/start', function (req, res) {
   const snakeInfo = {
