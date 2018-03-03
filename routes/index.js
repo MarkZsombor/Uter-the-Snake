@@ -150,7 +150,7 @@ router.post('/move', function (req, res) {
   }
 
   setGrid();
-  const closestTarget = chooseTarget();
+  const closestTarget = findFood();
   const finder = new PF.AStarFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
   const snakeResponse = {};
