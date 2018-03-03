@@ -257,6 +257,44 @@ router.post('/move', function (req, res) {
       }
     }
 
+    if (!validMoves.length) {
+      possibleMoves = [
+        {
+          direction: "right",
+          x: myHead.x + 1,
+          y: myHead.y,
+          valid: true
+        },
+        {
+          direction: "down",
+          x: myHead.x,
+          y: myHead.y + 1,
+          valid: true
+        },
+        {
+          direction: "left",
+          x: myHead.x - 1,
+          y: myHead.y,
+          valid: true
+        },
+        {
+          direction: "up",
+          x: myHead.x,
+          y: myHead.y - 1,
+          valid: true
+        },
+      ];
+      checkSelf();
+      checkEdges();
+      gameState.you.length += 100;
+      checkSnakes();
+      for (var i in possibleMoves) {
+        if (possibleMoves[i].valid) {
+          validMoves.push(possibleMoves[i]);
+        }
+      }
+    }
+
     snakeResponse.move = validMoves[0].direction;
     snakeResponse.taunt = taunts[1];
     console.log(snakeResponse);
