@@ -156,8 +156,7 @@ router.post('/move', function (req, res) {
   function chooseTarget() {
     if (gameState.you.length < getLongestLength()){
         return findFood();
-    }
-    if (gameState.snakes.data.length == 2) {
+    } else if (gameState.snakes.data.length == 2) {
         if (gameState.you.health > 40) {
             return findTail();
         } else {
