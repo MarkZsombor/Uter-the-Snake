@@ -36,7 +36,7 @@ router.post('/move', function (req, res) {
 
   // Make Uter say funny things for hilarity
   function getTaunt(gs) {
-    var tauntIndex = 0;
+    let tauntIndex = 0;
     if (gs.you.health > 90) {
       tauntIndex = 0;
     } else if (gs.you.health < 30) {
@@ -65,22 +65,22 @@ router.post('/move', function (req, res) {
   //Marks areas on the Grid where the snake can't pass into
   function setGrid(gs, grid) {
     //Mark my snake in grid
-    for (var i = 1; i < gs.you.body.data.length - 1; i++) {
+    for (let i = 1; i < gs.you.body.data.length - 1; i++) {
       grid.setWalkableAt(gs.you.body.data[i].x, gs.you.body.data[i].y, false);
     }
     //Mark other snake heads
-    var allSnakes = gs.snakes.data
-    for (var snake in allSnakes) {
+    const allSnakes = gs.snakes.data
+    for (let snake in allSnakes) {
       if (allSnakes[snake].id !== gs.you.id) {
         //Don't run into body
 
         // Account for other snakes length depending on whether they had eaten in the last turn
         // NOT WORKING
-        // var snakeIndex = allSnakes[snake].body.data.length - 2;
+        // let snakeIndex = allSnakes[snake].body.data.length - 2;
         // if (allSnakes[snake].body.data[snakeIndex + 1].x == allSnakes[snake].body.data[snakeIndex].x && allSnakes[snake].body.data[snakeIndex + 1].y == allSnakes[snake].body.data[snakeIndex].y) {
         //   snakeIndex++
         // }
-        for (var j = 0; j < allSnakes[snake].body.data.length - 1; j++) {
+        for (let j = 0; j < allSnakes[snake].body.data.length - 1; j++) {
           grid.setWalkableAt(allSnakes[snake].body.data[j].x, allSnakes[snake].body.data[j].y, false);
         }
         //Could we run into the head this turn
@@ -109,9 +109,9 @@ router.post('/move', function (req, res) {
 
   //return the closest food item
   function findFood(gs) {
-    var allTargets = [];
-    for (var i in gs.food.data) {
-      var distance = getDistance(gs.food.data[i].x, gs.food.data[i].y, myHead);
+    const allTargets = [];
+    for (let i in gs.food.data) {
+      let distance = getDistance(gs.food.data[i].x, gs.food.data[i].y, myHead);
       //Add a weight that reduces the likelihood of targeting wall food
       if (!gs.food.data[i].x || !gs.food.data[i].y || gs.food.data[i].x === gs.width - 1 || gs.food.data[i].y === gs.height - 1) {
         distance += 10;
@@ -152,9 +152,9 @@ router.post('/move', function (req, res) {
 
   //Determine the longest snake
   function getLongestLength(gs) {
-    var allSnakes = gs.snakes.data
-    var longestSnake = 0;
-    for (var snake in allSnakes) {
+    const allSnakes = gs.snakes.data
+    let longestSnake = 0;
+    for (let snake in allSnakes) {
       if (allSnakes[snake].id !== gs.you.id) {
         if (allSnakes[snake].length > longestSnake) {
           longestSnake = allSnakes[snake].length;
@@ -191,7 +191,7 @@ router.post('/move', function (req, res) {
   // if no path exists or a bigger snake can move into the same space choose a safe direction
   if (!path.length || (path.length === 2 && !grid.nodes[path[0][1]][path[0][0]].walkable)) {
     // console.log('NO PATH')
-    var possibleMoves = [
+    const possibleMoves = [
       {
         direction: "right",
         x: myHead.x + 1,
@@ -220,8 +220,8 @@ router.post('/move', function (req, res) {
 
     // Stop the snake from running into itself
     function checkSelf(gs, pm) {
-      for (var i = 0; i < gs.you.body.data.length-1; i++) {
-        for (var move in pm) {
+      for (let i = 0; i < gs.you.body.data.length-1; i++) {
+        for (let move in pm) {
           if (pm[move].x === gs.you.body.data[i].x && pm[move].y === gs.you.body.data[i].y) {
             pm[move].valid = false;
           }
@@ -231,7 +231,7 @@ router.post('/move', function (req, res) {
 
     //Stop from running into wall
     function checkEdges(gs, pm) {
-      for (var move in pm) {
+      for (let move in pm) {
         if (pm[move].x < 0 || pm[move].x >= gs.width) {
           pm[move].valid = false;
         }
@@ -243,12 +243,12 @@ router.post('/move', function (req, res) {
 
     //check for other snakes
     function checkSnakes(gs, pm) {
-      var allSnakes = gs.snakes.data
-      for (var snake in allSnakes) {
+      const allSnakes = gs.snakes.data
+      for (let snake in allSnakes) {
         if (allSnakes[snake].id !== gs.you.id) {
           //Don't run into body
-          for (var i = 0; i < allSnakes[snake].body.data.length-1; i++) {
-            for (var move in pm) {
+          for (let i = 0; i < allSnakes[snake].body.data.length-1; i++) {
+            for (let move in pm) {
               if (pm[move].x === allSnakes[snake].body.data[i].x && pm[move].y === allSnakes[snake].body.data[i].y) {
                 pm[move].valid = false;
               }
@@ -256,7 +256,7 @@ router.post('/move', function (req, res) {
           }
           //Decide on head collision depending on size
           if (allSnakes[snake].length >= gs.you.length) {
-            for (var move in pm) {
+            for (let move in pm) {
               if (pm[move].x === allSnakes[snake].body.data[0].x + 1 && pm[move].y === allSnakes[snake].body.data[0].y) {
                 pm[move].valid = false;
               }
@@ -279,8 +279,8 @@ router.post('/move', function (req, res) {
     checkEdges(gameState, possibleMoves);
     checkSnakes(gameState, possibleMoves);
 
-    var validMoves = [];
-    for (var i in possibleMoves) {
+    const validMoves = [];
+    for (let i in possibleMoves) {
       if (possibleMoves[i].valid) {
         validMoves.push(possibleMoves[i]);
       }
@@ -291,7 +291,7 @@ router.post('/move', function (req, res) {
       // console.log('NO PATH, NO OPEN MOVES');
 
       //Reset possibleMoves
-      for (var i in possibleMoves) {
+      for (let i in possibleMoves) {
         possibleMoves[i].valid = true
       }
       
@@ -300,7 +300,7 @@ router.post('/move', function (req, res) {
       checkSelf(gameState, possibleMoves);
       checkEdges(gameState, possibleMoves);
       checkSnakes(gameState, possibleMoves);
-      for (var i in possibleMoves) {
+      for (let i in possibleMoves) {
         if (possibleMoves[i].valid) {
           validMoves.push(possibleMoves[i]);
         }
