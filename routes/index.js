@@ -182,7 +182,7 @@ router.post('/move', function (req, res) {
   }
 
   // Set the board, choose the target and generate a path
-  setGrid(gameState);
+  setGrid(gameState, grid);
   const closestTarget = chooseTarget(gameState);
   const finder = new PF.AStarFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
