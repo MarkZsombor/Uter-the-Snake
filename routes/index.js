@@ -71,6 +71,8 @@ router.post('/move', function (req, res) {
     for (var snake in allSnakes) {
       if (allSnakes[snake].id !== gameState.you.id) {
         //Don't run into body
+
+        // Account for other snakes length depending on whether they had eaten in the last turn
         // var snakeIndex = allSnakes[snake].body.data.length - 2;
         // if (allSnakes[snake].body.data[snakeIndex + 1].x == allSnakes[snake].body.data[snakeIndex].x && allSnakes[snake].body.data[snakeIndex + 1].y == allSnakes[snake].body.data[snakeIndex].y) {
         //   snakeIndex++
@@ -102,14 +104,17 @@ router.post('/move', function (req, res) {
     }
   }
 
+  //return the closest food item
   function findFood() {
     // console.log(gameState.food.data);
     var allTargets = [];
     for (var i in gameState.food.data) {
       var distance = getDistance(gameState.food.data[i].x, gameState.food.data[i].y);
+      //Add a weight that reduces the likelihood of targeting wall food
       if (!gameState.food.data[i].x || !gameState.food.data[i].y || gameState.food.data[i].x === gameState.width - 1 || gameState.food.data[i].y === gameState.height - 1) {
         distance += 10;
       }
+      // Add a weight for food that can be eaten by bigger snakes
       // if (grid.nodes[gameState.food.data[i].x][gameState.food.data[i].y]) {
       //   if (!grid.nodes[gameState.food.data[i].x][gameState.food.data[i].y].walkable) {
       //     distance += 100
@@ -157,6 +162,7 @@ router.post('/move', function (req, res) {
 
   // Checks current health to switch between tail chasing and food chasing.
   function chooseTarget() {
+    // Toggle to keep you as the longest snake
     // if (gameState.you.length < getLongestLength()){
     //     return findFood();
     // } else 
@@ -171,12 +177,14 @@ router.post('/move', function (req, res) {
     }
   }
 
+  // Set the board, choose the target and generate a path
   setGrid();
   const closestTarget = chooseTarget();
   const finder = new PF.AStarFinder;
   const path = finder.findPath(myHead.x, myHead.y, closestTarget.x, closestTarget.y, grid);
   const snakeResponse = {};
 
+  // if no path exists or a bigger snake can move into the same space choose a safe direction
   if (!path.length || (path.length === 2 && !grid.nodes[path[0][1]][path[0][0]].walkable)) {
     // console.log('NO ROUTE')
     var possibleMoves = [
@@ -277,6 +285,7 @@ router.post('/move', function (req, res) {
       }
     }
 
+    // if no spaces are safe, this will allow to move into spaces bigger snakes can allow move into
     if (!validMoves.length) {
       possibleMoves = [
         {

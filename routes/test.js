@@ -1,3 +1,5 @@
+//This File is used for testing logic w/o running a server
+
 var PF = require('pathfinding');
 
 var gameState = {
