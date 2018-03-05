@@ -3,261 +3,173 @@
 var PF = require('pathfinding');
 
 var gameState = {
-	"width": 10,
+	"width": 11,
 	"height": 14,
-	"id": 8587,
-	"turn": 101,
+	"id": 32462,
+	"turn": 161,
 	"snakes": {
 		"data": [
 			{
-				"id": "a3a3d33c-3d4d-4424-847d-cab2a60f37d7",
-				"health": 92,
-				"length": 13,
-				"taunt": "\"The body of mind slips on a banana peel.\"",
-				"name": "dsnek",
+				"id": "744a925e-7a45-426b-ad71-e10a5d88fc77",
+				"health": 23,
+				"length": 5,
+				"taunt": "\"simple eat\"",
+				"name": "Training Snake 8",
 				"object": "snake",
 				"body": {
 					"data": [
 						{
 							"object": "point",
-							"x": 3,
-							"y": 12
-						},
-						{
-							"object": "point",
-							"x": 3,
-							"y": 13
-						},
-						{
-							"object": "point",
-							"x": 4,
-							"y": 13
-						},
-						{
-							"object": "point",
-							"x": 5,
-							"y": 13
-						},
-						{
-							"object": "point",
-							"x": 6,
-							"y": 13
-						},
-						{
-							"object": "point",
-							"x": 7,
-							"y": 13
-						},
-						{
-							"object": "point",
-							"x": 7,
-							"y": 12
-						},
-						{
-							"object": "point",
-							"x": 7,
-							"y": 11
-						},
-						{
-							"object": "point",
-							"x": 7,
-							"y": 10
-						},
-						{
-							"object": "point",
-							"x": 6,
-							"y": 10
-						},
-						{
-							"object": "point",
-							"x": 6,
-							"y": 9
-						},
-						{
-							"object": "point",
-							"x": 6,
+							"x": 9,
 							"y": 8
 						},
 						{
 							"object": "point",
-							"x": 5,
-							"y": 8
-						}
-					],
-					"object": "list"
-				}
-			},
-			{
-				"id": "29db5fe2-3024-46b0-835e-9a3372a70e0c",
-				"health": 100,
-				"length": 20,
-				"taunt": "\"Yoooo\"",
-				"name": "trash-snake",
-				"object": "snake",
-				"body": {
-					"data": [
-						{
-							"object": "point",
-							"x": 0,
-							"y": 11
-						},
-						{
-							"object": "point",
-							"x": 0,
-							"y": 10
-						},
-						{
-							"object": "point",
-							"x": 0,
-							"y": 9
-						},
-						{
-							"object": "point",
-							"x": 0,
-							"y": 8
-						},
-						{
-							"object": "point",
-							"x": 0,
+							"x": 9,
 							"y": 7
 						},
 						{
 							"object": "point",
-							"x": 0,
+							"x": 9,
 							"y": 6
 						},
 						{
 							"object": "point",
-							"x": 0,
+							"x": 9,
 							"y": 5
 						},
 						{
 							"object": "point",
-							"x": 0,
-							"y": 4
-						},
-						{
-							"object": "point",
-							"x": 0,
-							"y": 3
-						},
-						{
-							"object": "point",
-							"x": 0,
-							"y": 2
-						},
-						{
-							"object": "point",
-							"x": 0,
-							"y": 1
-						},
-						{
-							"object": "point",
-							"x": 0,
-							"y": 0
-						},
-						{
-							"object": "point",
-							"x": 1,
-							"y": 0
-						},
-						{
-							"object": "point",
-							"x": 2,
-							"y": 0
-						},
-						{
-							"object": "point",
-							"x": 3,
-							"y": 0
-						},
-						{
-							"object": "point",
-							"x": 4,
-							"y": 0
-						},
-						{
-							"object": "point",
-							"x": 5,
-							"y": 0
-						},
-						{
-							"object": "point",
-							"x": 6,
-							"y": 0
-						},
-						{
-							"object": "point",
-							"x": 7,
-							"y": 0
-						},
-						{
-							"object": "point",
-							"x": 7,
-							"y": 0
+							"x": 8,
+							"y": 5
 						}
 					],
 					"object": "list"
 				}
 			},
 			{
-				"id": "4d4b334f-5134-49f6-8e1c-dd9320eee910",
-				"health": 62,
-				"length": 10,
-				"taunt": "\"I also have a bag of marzipan JoyJoys!\"",
-				"name": "timid uter",
+				"id": "38747a0d-388d-43cc-a2e4-938f0c8ccb53",
+				"health": 97,
+				"length": 23,
+				"taunt": "\"Don't make me run, I'm full of Chocolate!\"",
+				"name": "Uter",
 				"object": "snake",
 				"body": {
 					"data": [
 						{
 							"object": "point",
-							"x": 5,
-							"y": 12
+							"x": 7,
+							"y": 10
+						},
+						{
+							"object": "point",
+							"x": 7,
+							"y": 9
+						},
+						{
+							"object": "point",
+							"x": 7,
+							"y": 8
+						},
+						{
+							"object": "point",
+							"x": 7,
+							"y": 7
+						},
+						{
+							"object": "point",
+							"x": 7,
+							"y": 6
 						},
 						{
 							"object": "point",
 							"x": 6,
-							"y": 12
+							"y": 6
+						},
+						{
+							"object": "point",
+							"x": 5,
+							"y": 6
+						},
+						{
+							"object": "point",
+							"x": 5,
+							"y": 5
+						},
+						{
+							"object": "point",
+							"x": 4,
+							"y": 5
+						},
+						{
+							"object": "point",
+							"x": 4,
+							"y": 4
+						},
+						{
+							"object": "point",
+							"x": 4,
+							"y": 3
+						},
+						{
+							"object": "point",
+							"x": 4,
+							"y": 2
+						},
+						{
+							"object": "point",
+							"x": 4,
+							"y": 1
+						},
+						{
+							"object": "point",
+							"x": 5,
+							"y": 1
 						},
 						{
 							"object": "point",
 							"x": 6,
-							"y": 11
+							"y": 1
 						},
 						{
 							"object": "point",
-							"x": 5,
-							"y": 11
+							"x": 7,
+							"y": 1
 						},
 						{
 							"object": "point",
-							"x": 5,
-							"y": 10
+							"x": 8,
+							"y": 1
 						},
 						{
 							"object": "point",
-							"x": 4,
-							"y": 10
+							"x": 9,
+							"y": 1
 						},
 						{
 							"object": "point",
-							"x": 3,
-							"y": 10
+							"x": 10,
+							"y": 1
 						},
 						{
 							"object": "point",
-							"x": 3,
-							"y": 11
+							"x": 10,
+							"y": 2
 						},
 						{
 							"object": "point",
-							"x": 4,
-							"y": 11
+							"x": 10,
+							"y": 3
 						},
 						{
 							"object": "point",
-							"x": 4,
-							"y": 12
+							"x": 10,
+							"y": 4
+						},
+						{
+							"object": "point",
+							"x": 10,
+							"y": 5
 						}
 					],
 					"object": "list"
@@ -270,93 +182,23 @@ var gameState = {
 		"data": [
 			{
 				"object": "point",
-				"x": 9,
+				"x": 0,
 				"y": 0
 			},
 			{
 				"object": "point",
-				"x": 9,
-				"y": 3
-			},
-			{
-				"object": "point",
 				"x": 8,
-				"y": 1
-			},
-			{
-				"object": "point",
-				"x": 9,
-				"y": 1
-			},
-			{
-				"object": "point",
-				"x": 1,
-				"y": 10
-			},
-			{
-				"object": "point",
-				"x": 9,
-				"y": 10
+				"y": 12
 			},
 			{
 				"object": "point",
 				"x": 2,
-				"y": 10
-			},
-			{
-				"object": "point",
-				"x": 8,
-				"y": 2
-			},
-			{
-				"object": "point",
-				"x": 2,
-				"y": 3
-			},
-			{
-				"object": "point",
-				"x": 5,
-				"y": 1
-			},
-			{
-				"object": "point",
-				"x": 1,
-				"y": 3
-			},
-			{
-				"object": "point",
-				"x": 3,
-				"y": 7
-			},
-			{
-				"object": "point",
-				"x": 4,
-				"y": 4
-			},
-			{
-				"object": "point",
-				"x": 9,
-				"y": 13
-			},
-			{
-				"object": "point",
-				"x": 8,
-				"y": 7
-			},
-			{
-				"object": "point",
-				"x": 8,
-				"y": 11
-			},
-			{
-				"object": "point",
-				"x": 8,
-				"y": 6
+				"y": 9
 			},
 			{
 				"object": "point",
 				"x": 6,
-				"y": 5
+				"y": 10
 			}
 		],
 		"object": "list"
@@ -365,28 +207,53 @@ var gameState = {
 	"dead_snakes": {
 		"data": [
 			{
-				"id": "d9979736-9e2e-4419-b156-e2f808bbf7c3",
-				"health": 77,
-				"length": 14,
-				"taunt": "\"Uh oh\"",
-				"name": "whelp aggro",
+				"id": "e7ac3181-c0c5-4421-a13a-c992a0942bf2",
+				"health": 97,
+				"length": 17,
+				"taunt": "TIMED OUT",
+				"name": "kind of timid uter",
 				"object": "snake",
 				"body": {
 					"data": [
 						{
 							"object": "point",
 							"x": 4,
-							"y": 13
-						},
-						{
-							"object": "point",
-							"x": 5,
-							"y": 13
+							"y": 12
 						},
 						{
 							"object": "point",
 							"x": 4,
 							"y": 13
+						},
+						{
+							"object": "point",
+							"x": 3,
+							"y": 13
+						},
+						{
+							"object": "point",
+							"x": 2,
+							"y": 13
+						},
+						{
+							"object": "point",
+							"x": 1,
+							"y": 13
+						},
+						{
+							"object": "point",
+							"x": 1,
+							"y": 12
+						},
+						{
+							"object": "point",
+							"x": 2,
+							"y": 12
+						},
+						{
+							"object": "point",
+							"x": 3,
+							"y": 12
 						},
 						{
 							"object": "point",
@@ -397,6 +264,16 @@ var gameState = {
 							"object": "point",
 							"x": 5,
 							"y": 12
+						},
+						{
+							"object": "point",
+							"x": 5,
+							"y": 13
+						},
+						{
+							"object": "point",
+							"x": 6,
+							"y": 13
 						},
 						{
 							"object": "point",
@@ -406,100 +283,98 @@ var gameState = {
 						{
 							"object": "point",
 							"x": 6,
-							"y": 13
-						},
-						{
-							"object": "point",
-							"x": 7,
-							"y": 13
-						},
-						{
-							"object": "point",
-							"x": 8,
-							"y": 13
-						},
-						{
-							"object": "point",
-							"x": 8,
-							"y": 12
-						},
-						{
-							"object": "point",
-							"x": 8,
 							"y": 11
 						},
 						{
 							"object": "point",
-							"x": 7,
+							"x": 5,
 							"y": 11
 						},
 						{
 							"object": "point",
-							"x": 7,
-							"y": 10
+							"x": 4,
+							"y": 11
 						},
 						{
 							"object": "point",
-							"x": 7,
-							"y": 9
+							"x": 3,
+							"y": 11
 						}
 					],
 					"object": "list"
 				}
 			},
 			{
-				"id": "e0323921-3386-4883-b531-e8ad277b370e",
-				"health": 82,
-				"length": 9,
-				"taunt": "TIMED OUT",
-				"name": "ds",
+				"id": "0d3fba4d-7f01-460c-95e9-28cd154db839",
+				"health": 80,
+				"length": 4,
+				"taunt": "\"up\"",
+				"name": "Training Snake 9",
 				"object": "snake",
 				"body": {
 					"data": [
 						{
 							"object": "point",
-							"x": 1,
-							"y": 6
-						},
-						{
-							"object": "point",
-							"x": 1,
-							"y": 7
-						},
-						{
-							"object": "point",
-							"x": 0,
-							"y": 7
-						},
-						{
-							"object": "point",
-							"x": 0,
-							"y": 6
-						},
-						{
-							"object": "point",
-							"x": 1,
-							"y": 6
-						},
-						{
-							"object": "point",
-							"x": 1,
-							"y": 5
-						},
-						{
-							"object": "point",
-							"x": 1,
+							"x": 3,
 							"y": 4
 						},
 						{
 							"object": "point",
-							"x": 1,
-							"y": 3
+							"x": 3,
+							"y": 5
 						},
 						{
 							"object": "point",
-							"x": 1,
-							"y": 2
+							"x": 3,
+							"y": 4
+						},
+						{
+							"object": "point",
+							"x": 4,
+							"y": 4
+						}
+					],
+					"object": "list"
+				}
+			},
+			{
+				"id": "44c4c271-d6f1-4007-99e2-918ffa81af94",
+				"health": 92,
+				"length": 6,
+				"taunt": "\"Look at my long flowing hair!\"",
+				"name": "Bird Snake",
+				"object": "snake",
+				"body": {
+					"data": [
+						{
+							"object": "point",
+							"x": 11,
+							"y": 0
+						},
+						{
+							"object": "point",
+							"x": 10,
+							"y": 0
+						},
+						{
+							"object": "point",
+							"x": 9,
+							"y": 0
+						},
+						{
+							"object": "point",
+							"x": 8,
+							"y": 0
+						},
+						{
+							"object": "point",
+							"x": 7,
+							"y": 0
+						},
+						{
+							"object": "point",
+							"x": 6,
+							"y": 0
 						}
 					],
 					"object": "list"
@@ -509,63 +384,128 @@ var gameState = {
 		"object": "list"
 	},
 	"you": {
-		"id": "4d4b334f-5134-49f6-8e1c-dd9320eee910",
-		"health": 62,
-		"length": 10,
-		"taunt": "\"I also have a bag of marzipan JoyJoys!\"",
-		"name": "timid uter",
+		"id": "38747a0d-388d-43cc-a2e4-938f0c8ccb53",
+		"health": 97,
+		"length": 23,
+		"taunt": "\"Don't make me run, I'm full of Chocolate!\"",
+		"name": "Uter",
 		"object": "snake",
 		"body": {
 			"data": [
 				{
 					"object": "point",
-					"x": 5,
-					"y": 12
+					"x": 7,
+					"y": 10
+				},
+				{
+					"object": "point",
+					"x": 7,
+					"y": 9
+				},
+				{
+					"object": "point",
+					"x": 7,
+					"y": 8
+				},
+				{
+					"object": "point",
+					"x": 7,
+					"y": 7
+				},
+				{
+					"object": "point",
+					"x": 7,
+					"y": 6
 				},
 				{
 					"object": "point",
 					"x": 6,
-					"y": 12
+					"y": 6
+				},
+				{
+					"object": "point",
+					"x": 5,
+					"y": 6
+				},
+				{
+					"object": "point",
+					"x": 5,
+					"y": 5
+				},
+				{
+					"object": "point",
+					"x": 4,
+					"y": 5
+				},
+				{
+					"object": "point",
+					"x": 4,
+					"y": 4
+				},
+				{
+					"object": "point",
+					"x": 4,
+					"y": 3
+				},
+				{
+					"object": "point",
+					"x": 4,
+					"y": 2
+				},
+				{
+					"object": "point",
+					"x": 4,
+					"y": 1
+				},
+				{
+					"object": "point",
+					"x": 5,
+					"y": 1
 				},
 				{
 					"object": "point",
 					"x": 6,
-					"y": 11
+					"y": 1
 				},
 				{
 					"object": "point",
-					"x": 5,
-					"y": 11
+					"x": 7,
+					"y": 1
 				},
 				{
 					"object": "point",
-					"x": 5,
-					"y": 10
+					"x": 8,
+					"y": 1
 				},
 				{
 					"object": "point",
-					"x": 4,
-					"y": 10
+					"x": 9,
+					"y": 1
 				},
 				{
 					"object": "point",
-					"x": 3,
-					"y": 10
+					"x": 10,
+					"y": 1
 				},
 				{
 					"object": "point",
-					"x": 3,
-					"y": 11
+					"x": 10,
+					"y": 2
 				},
 				{
 					"object": "point",
-					"x": 4,
-					"y": 11
+					"x": 10,
+					"y": 3
 				},
 				{
 					"object": "point",
-					"x": 4,
-					"y": 12
+					"x": 10,
+					"y": 4
+				},
+				{
+					"object": "point",
+					"x": 10,
+					"y": 5
 				}
 			],
 			"object": "list"
@@ -614,12 +554,13 @@ const grid = new PF.Grid(gameState.width, gameState.height);
 function setGrid(gs, grid) {
 	//Mark my snake in grid
 	for (var i = 1; i < gs.you.body.data.length - 1; i++) {
-		console.log(gs.you.body.data[i].x, gs.you.body.data[i].y)
+		// console.log(gs.you.body.data[i].x, gs.you.body.data[i].y)
 		grid.setWalkableAt(gs.you.body.data[i].x, gs.you.body.data[i].y, false);
 	}
 	//Mark other snake heads
 	var allSnakes = gs.snakes.data
 	for (var snake in allSnakes) {
+		// console.log(gs.you.id)
 		if (allSnakes[snake].id !== gs.you.id) {
 			//Don't run into body
 
@@ -716,12 +657,12 @@ function getLongestLength(gs) {
 // Checks current health to switch between tail chasing and food chasing.
 function chooseTarget(gs) {
 	// Toggle to keep you as the longest snake
-	// if (gs.you.length < getLongestLength()){
-	//     return findFood();
+	// if (gs.you.length < getLongestLength(gs)){
+	//     return findFood(gs);
 	// } else 
 	if (gs.snakes.data.length == 2) {
 		if (gs.you.health > 40) {
-			return findTail();
+			return findTail(gs);
 		} else {
 			return findFood(gs);
 		}

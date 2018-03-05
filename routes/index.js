@@ -167,12 +167,12 @@ router.post('/move', function (req, res) {
   // Checks current health to switch between tail chasing and food chasing.
   function chooseTarget(gs) {
     // Toggle to keep you as the longest snake
-    // if (gs.you.length < getLongestLength()){
-    //     return findFood();
+    // if (gs.you.length < getLongestLength(gs)){
+    //     return findFood(gs);
     // } else 
     if (gs.snakes.data.length == 2) {
         if (gs.you.health > 40) {
-            return findTail();
+            return findTail(gs);
         } else {
             return findFood(gs);
         }
