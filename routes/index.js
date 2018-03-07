@@ -34,30 +34,10 @@ router.post('/start', function (req, res) {
 router.post('/move', function (req, res) {
   const gameState = req.body;
 
-  // Make Uter say funny things for hilarity
-  function getTaunt(gs) {
-    let tauntIndex = 0;
-    if (gs.you.health > 90) {
-      tauntIndex = 0;
-    } else if (gs.you.health < 30) {
-      tauntIndex = 5;
-    } else if (gs.turn < 100) {
-      tauntIndex = 4;
-    } else if (gs.turn < 150) {
-      tauntIndex = 2;
-    } else {
-      tauntIndex = 3;
-    }
-    return tauntIndex;
-  }
-
   const myHead = {
     x: gameState.you.body.data[0].x,
     y: gameState.you.body.data[0].y
   };
-
-  //Determines the distance from the snakes head to something
-  const getDistance = (a, b, head) => (Math.abs(a - head.x) + Math.abs(b - head.y));
 
   //Create an empty board
   const grid = new PF.Grid(gameState.width, gameState.height);
@@ -104,80 +84,6 @@ router.post('/move', function (req, res) {
           }
         }
       }
-    }
-  }
-
-  //return the closest food item
-  function findFood(gs) {
-    const allTargets = [];
-    for (let i in gs.food.data) {
-      let distance = getDistance(gs.food.data[i].x, gs.food.data[i].y, myHead);
-      //Add a weight that reduces the likelihood of targeting wall food
-      if (!gs.food.data[i].x || !gs.food.data[i].y || gs.food.data[i].x === gs.width - 1 || gs.food.data[i].y === gs.height - 1) {
-        distance += 10;
-      }
-      // Add a weight for food that can be eaten by bigger snakes
-      // if (grid.nodes[gs.food.data[i].y][gs.food.data[i].x]) {
-      //   if (!grid.nodes[gs.food.data[i].y][gs.food.data[i].x].walkable) {
-      //     distance += 100
-      //   }
-      // }
-      allTargets.push({
-        x: gs.food.data[i].x,
-        y: gs.food.data[i].y,
-        distance: distance
-      });
-
-    }
-    //Sort by weighted distance
-    allTargets.sort(function (a, b) {
-      return a.distance - b.distance;
-    });
-    //Return the closest
-    return allTargets[0];
-  }
-
-  // Finds your own tail and returns its coordinates for targeting.
-  function findTail(gs) {
-    let snakeBody = gs.you;
-    let snakeLength = gs.you.length;
-    if(snakeLength === 1) {
-      return findFood(gs);
-    }
-    let tailPosition = snakeBody.body.data[snakeLength - 1];
-    return tailPosition;
-
-  }
-
-
-  //Determine the longest snake
-  function getLongestLength(gs) {
-    const allSnakes = gs.snakes.data
-    let longestSnake = 0;
-    for (let snake in allSnakes) {
-      if (allSnakes[snake].id !== gs.you.id) {
-        if (allSnakes[snake].length > longestSnake) {
-          longestSnake = allSnakes[snake].length;
-        }
-      }
-    }
-    return longestSnake;
-  }
-
-  // Checks current health to switch between tail chasing and food chasing.
-  function chooseTarget(gs) {
-    // Toggle to keep you as the longest snake
-    // if (gs.you.length < getLongestLength(gs)){
-    //     return findFood(gs);
-    // } else 
-    if (gs.snakes.data.length == 2) {
-        if (gs.you.health > 40) {
-            return findTail(gs);
-        } else {
-            return findFood(gs);
-        }
-    } else {
-        return findFood(gs);
     }
   }
 
@@ -312,20 +218,7 @@ router.post('/move', function (req, res) {
     return res.json(snakeResponse);
 
   } else {
-    function setMove(path, head) {
-      if (path[1][0] === head.x && path[1][1] === head.y + 1) {
-        return 'down';
-      } else if (path[1][0] === head.x && path[1][1] === head.y - 1) {
-        return 'up';
-      } else if (path[1][0] === head.x + 1 && path[1][1] === head.y) {
-        return 'right';
-      } else if (path[1][0] === head.x - 1 && path[1][1] === head.y) {
-        return 'left';
-      } else {
-        return 'up';
-      }
-    }
-
+    
     snakeResponse.move = setMove(path, myHead);
     snakeResponse.taunt = taunts[getTaunt(gameState)];
     return res.json(snakeResponse);
@@ -334,3 +227,114 @@ router.post('/move', function (req, res) {
 })
 
 module.exports = router
+
+//Helper functions
+
+//Convert the calculated path coords to a direction of movement
+function setMove(path, head) {
+  if (path[1][0] === head.x && path[1][1] === head.y + 1) {
+    return 'down';
+  } else if (path[1][0] === head.x && path[1][1] === head.y - 1) {
+    return 'up';
+  } else if (path[1][0] === head.x + 1 && path[1][1] === head.y) {
+    return 'right';
+  } else if (path[1][0] === head.x - 1 && path[1][1] === head.y) {
+    return 'left';
+  } else {
+    return 'down';
+  }
+}
+
+// Make Uter say funny things for hilarity
+function getTaunt(gs) {
+  let tauntIndex = 0;
+  if (gs.you.health > 90) {
+    tauntIndex = 0;
+  } else if (gs.you.health < 30) {
+    tauntIndex = 5;
+  } else if (gs.turn < 100) {
+    tauntIndex = 4;
+  } else if (gs.turn < 150) {
+    tauntIndex = 2;
+  } else {
+    tauntIndex = 3;
+  }
+  return tauntIndex;
+}
+
+//Determines the distance from the snakes head to something
+const getDistance = (a, b, head) => (Math.abs(a - head.x) + Math.abs(b - head.y));
+
+//return the closest food item
+function findFood(gs) {
+  const allTargets = [];
+  for (let i in gs.food.data) {
+    let distance = getDistance(gs.food.data[i].x, gs.food.data[i].y, myHead);
+    //Add a weight that reduces the likelihood of targeting wall food
+    if (!gs.food.data[i].x || !gs.food.data[i].y || gs.food.data[i].x === gs.width - 1 || gs.food.data[i].y === gs.height - 1) {
+      distance += 10;
+    }
+    // Add a weight for food that can be eaten by bigger snakes
+    // if (grid.nodes[gs.food.data[i].y][gs.food.data[i].x]) {
+    //   if (!grid.nodes[gs.food.data[i].y][gs.food.data[i].x].walkable) {
+    //     distance += 100
+    //   }
+    // }
+    allTargets.push({
+      x: gs.food.data[i].x,
+      y: gs.food.data[i].y,
+      distance: distance
+    });
+
+  }
+  //Sort by weighted distance
+  allTargets.sort(function (a, b) {
+    return a.distance - b.distance;
+  });
+  //Return the closest
+  return allTargets[0];
+}
+
+// Finds your own tail and returns its coordinates for targeting.
+function findTail(gs) {
+  let snakeBody = gs.you;
+  let snakeLength = gs.you.length;
+  if (snakeLength === 1) {
+    return findFood(gs);
+  }
+  let tailPosition = snakeBody.body.data[snakeLength - 1];
+  return tailPosition;
+
+}
+
+
+//Determine the longest snake
+function getLongestLength(gs) {
+  const allSnakes = gs.snakes.data
+  let longestSnake = 0;
+  for (let snake in allSnakes) {
+    if (allSnakes[snake].id !== gs.you.id) {
+      if (allSnakes[snake].length > longestSnake) {
+        longestSnake = allSnakes[snake].length;
+      }
+    }
+  }
+  return longestSnake;
+}
+
+// Checks current health to switch between tail chasing and food chasing.
+function chooseTarget(gs) {
+  // Toggle to keep you as the longest snake
+  // if (gs.you.length < getLongestLength(gs)){
+  //     return findFood(gs);
+  // } else 
+  if (gs.snakes.data.length == 2) {
+    if (gs.you.health > 40) {
+      return findTail(gs);
+    } else {
+      return findFood(gs);
+    }
+  } else {
+    return findFood(gs);
+  }
+}
