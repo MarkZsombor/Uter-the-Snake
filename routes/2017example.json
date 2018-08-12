@@ -1,0 +1,80 @@
+{
+  "width": 10,
+  "height": 19,
+  "id": 5781,
+  "turn": 450,
+  "snakes": {
+    "data": [{
+        "id": "38747a0d-388d-43cc-a2e4-938f0c8ccb53",
+        "health": 98,
+        "length": 54,
+        "taunt": "\"I don't deserve this!\"",
+        "name": "Uter",
+        "object": "snake",
+        "body": {
+          "data": [{
+              "object": "point",
+              "x": 6,
+              "y": 7
+            },
+            {
+              "object": "point",
+              "x": 5,
+              "y": 7
+            }
+          ],
+          "object": "list"
+        }
+      }
+    ],
+    "object": "list"
+  },
+  "food": {
+    "data": [{
+        "object": "point",
+        "x": 0,
+        "y": 13
+      }
+    ],
+    "object": "list"
+  },
+  "object": "world",
+  "dead_snakes": {
+    "data": [{
+        "id": "8272ac07-3525-4171-ba03-4be02e23d900",
+        "health": 19,
+        "length": 5,
+        "taunt": "",
+        "name": "coldog",
+        "object": "snake",
+        "body": {
+          "data": [{
+              "object": "point",
+              "x": 5,
+              "y": 2
+            }
+          ],
+          "object": "list"
+        }
+      }
+    ],
+    "object": "list"
+  },
+  "you": {
+    "id": "38747a0d-388d-43cc-a2e4-938f0c8ccb53",
+    "health": 98,
+    "length": 54,
+    "taunt": "\"I don't deserve this!\"",
+    "name": "Uter",
+    "object": "snake",
+    "body": {
+      "data": [{
+          "object": "point",
+          "x": 6,
+          "y": 7
+        }
+      ],
+      "object": "list"
+    }
+  }
+}
