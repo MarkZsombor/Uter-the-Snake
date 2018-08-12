@@ -34,6 +34,7 @@ node_modules
 npm-debug.log
 
 routes/example.json
+routes/2018example.json
 .env
 /*.env
 .DS_Store
